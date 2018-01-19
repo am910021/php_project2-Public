@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -16,8 +17,8 @@ class UserProfileController extends Controller
     public function read(){
         $user = Auth::user();
         if (!$user->isUser){
-            return view('user.userProfileUpdate')
-            ->with('message', '請先新增個人資料');
+            Session::put('message', '請先新增個人資料');
+            return view('user.userProfileUpdate');
         }
         $userProfile = UserProfile::where('user_id',$user->id)->first();
         return view('user.userProfileRead')->with('userProfile', $userProfile);
@@ -73,8 +74,8 @@ class UserProfileController extends Controller
         $user->isUser = TRUE;
         $user->save();
 
-        return Redirect::route('userProfile.read')
-            ->with('message', '新增成功');
+        return Redirect::route('user')
+            ->with('message', '個人設定新增成功。');
     }
     
     public function edit(){
@@ -125,8 +126,8 @@ class UserProfileController extends Controller
          
         $userProfile->save();
         
-        return Redirect::route('userProfile.read')
-            ->with('message', '修改成功');
+        return Redirect::route('user')
+            ->with('message', '個人設定修改成功。');
     }
 
 }

@@ -29,6 +29,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth'], function () {
 Route::get('login', 'Login\LoginController@show')->name('login');
 Route::post('login', 'Login\LoginController@login')->name('login');
 Route::get('logout', 'Login\LoginController@logout')->name('logout');
+Route::get('login/reset', 'Login\LoginController@passwordReset')->name('password.reset');
+Route::post('login/reset', 'Login\LoginController@passwordMail')->name('password.mail');
+Route::get('login/password/{key}', 'Login\LoginController@pwdResetByURL')->name('login.pwdUpdateByURL')->where('key', '[A-Fa-f0-9]{64}');
+Route::post('login/password/{key}', 'Login\LoginController@pwdUpdateByURL')->name('login.pwdUpdateByURL')->where('key', '[A-Fa-f0-9]{64}');
+
 /**  register */
 Route::get('register', 'Login\RegisterController@show')->name('register');
 Route::post('register', 'Login\RegisterController@register')->name('register');
@@ -38,8 +43,15 @@ Route::post('register/enable/{key}', 'Login\RegisterController@password')->name(
 Route::get('register/enable/success', 'Login\RegisterController@success')->name('register.success');
 
 Route::group(['middleware' => 'auth'], function () {
+    /** user center*/
+    Route::get('user', 'User\UserController@show')->name('user');
+    Route::get('user/edit', 'User\UserController@edit')->name('user.edit');
+    Route::post('user/update', 'User\UserController@update')->name('user.update');
+    Route::get('user/password', 'User\UserController@pwdEdit')->name('user.password');
+    Route::post('user/password', 'User\UserController@pwdUpdate')->name('user.password');
+   
     /** userProfile */
-    Route::get('userProfile/read', 'User\UserProfileController@read')->name('userProfile.read');
+    Route::get('userProfile', 'User\UserProfileController@read')->name('userProfile.read');
     Route::post('userProfile/store', 'User\UserProfileController@store')->name('userProfile.store');
     Route::get('userProfile/edit', 'User\UserProfileController@edit')->name('userProfile.edit');
 // Route::get('userProfile/create', 'User\UserProfileController@create')->name('userProfile.create');
@@ -70,9 +82,9 @@ Route::group(['middleware' => ['auth', 'checkUser']], function () {
     Route::get('dateMealRecord/readChart', 'MealRecord\DateMealRecordController@readChart')->name('dateMealRecord.readChart');
 });
 /** test */
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('user/{id}', 'UserController@show');
-});
-Route::get('foo/{id}', function ($id) {
-    return 'Hello World' . $id;
-});
+// Route::group(['middleware' => 'auth'], function () {
+//     Route::get('user/{id}', 'UserController@show');
+// });
+// Route::get('foo/{id}', function ($id) {
+//     return 'Hello World' . $id;
+// });

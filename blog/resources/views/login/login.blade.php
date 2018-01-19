@@ -40,8 +40,11 @@
         </div>
 
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-8">
+            <div class="col-sm-offset-2 col-sm-3">
                 <button type="submit" class="btn btn-primary btn-xs-block">登入</button>
+            </div>
+            <div class="col-sm-3">
+                <a href="{{ route('password.reset') }}" class="btn btn-success btn-xs-block">忘記密碼</a>
             </div>
         </div>
     </form>

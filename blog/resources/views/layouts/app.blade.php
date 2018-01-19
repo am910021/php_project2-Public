@@ -72,6 +72,11 @@
                         </li>
                     @else
                         <li>
+                            <a href="{{ route('user') }}">
+                                <i class=""></i><span>{{ Auth::user()->username }}({{ Auth::user()->nickname}})</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('logout') }}">
                                 <i class="fa fa-sign-out"></i><span>登出</span>
                             </a>
@@ -171,19 +176,26 @@
                     </li>
                     <li>
                         <a href="{{ route('dateMealRecord.readChart') }}">
-                            <i class="fa fa-line-chart"></i><span>日期統計圖表</span>
+                            <i class="fa fa-line-chart"></i><span>歷史統計圖表</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dateMealRecord.readList') }}">
-                            <i class="fa fa-list-alt"></i><span>日期列表</span>
+                            <i class="fa fa-list-alt"></i><span>歷史列表</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('userProfile.read') }}">
-                            <i class="fa fa-book"></i><span>個人資料</span>
+                        <a href="{{ route('user') }}">
+                            <i class="fa fa-book"></i><span>帳號資料</span>
                         </a>
                     </li>
+                    @if( Auth::user()->type <3 )
+                    <li>
+                    	<a >
+                    		<i class="fa fa-server"></i><span>管理</span>
+                    	</a>
+                    </li>
+                    @endif
             @endif
 
             <!-- <li class="treeview">
@@ -205,7 +217,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="main-contant">
         <!-- Content Header (Page header) -->
         <section class="content-header">
 
@@ -234,7 +246,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="min-height: 0px;padding:0px">
             <!-- Main row -->
             <div class="row">
 
