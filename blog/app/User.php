@@ -24,4 +24,14 @@ class User extends Authenticatable
     ];
     
     protected $dates = ['created_at','updated_at', 'expiry_date'];
+    
+    
+    protected $table = 'users';
+    
+    
+    public function group()
+    {
+        return $this->hasOne('App\Group', 'id', 'group')->first();
+    }
 }
+

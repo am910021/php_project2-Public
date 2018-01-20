@@ -8,9 +8,13 @@
         <div class="form-group {{ $errors->has('age')?"has-error":"" }}">
             <label for="age" class="col-sm-2 control-label">年齡:</label>
             <div class="col-sm-7">
+              <div class="input-group">
                 <input type="text" class="form-control" id="age" name="age"
                        value="{{ old('age', isset($userProfile)?$userProfile->age:'') }}">
+                <span class="input-group-addon">&ensp;歲&ensp;</span>
+              </div>
             </div>
+
             @if($errors->has('age'))
                 <div class="col-sm-3">
                     <span class="help-block">
@@ -23,8 +27,12 @@
         <div class="form-group {{ $errors->has('height')?"has-error":"" }}">
             <label for="height" class="col-sm-2 control-label">身高:</label>
             <div class="col-sm-7">
+
+              <div class="input-group">
                 <input type="number" class="form-control" id="height" name="height"
                        value="{{ old('height', isset($userProfile)?$userProfile->height:'') }}">
+                <span class="input-group-addon">公分</span>
+              </div>
             </div>
             @if($errors->has('height'))
                 <div class="col-sm-3">
@@ -38,8 +46,12 @@
         <div class="form-group {{ $errors->has('weight')?"has-error":"" }}">
             <label for="weight" class="col-sm-2 control-label">體重:</label>
             <div class="col-sm-7">
+
+              <div class="input-group">
                 <input type="number" step="0.01" class="form-control" id="weight" name="weight"
                        value="{{ old('weight', isset($userProfile)?$userProfile->weight:'') }}">
+                <span class="input-group-addon">公斤</span>
+              </div>
             </div>
             @if($errors->has('weight'))
                 <div class="col-sm-3">
@@ -53,12 +65,15 @@
         <div class="form-group {{ $errors->has('sex')?"has-error":"" }}">
             <label for="sex" class="col-sm-2 control-label">性別:</label>
             <div class="col-sm-7">
+              <div class="input-group">
                 <select name="sex" id="sex" class="form-control">
                     <option value=""></option>
                     @foreach (config('constants.SEX_ARR') as $index => $SEX)
                         <option value="{{ $index }}" {{ old('sex', isset($userProfile)?strval($userProfile->sex):'') === strval($index)? "selected": ""}}>{{ $SEX }}</option>
                     @endforeach
                 </select>
+                <span class="input-group-addon"><span class="fa fa-id-card-o">&ensp;</span></span>
+              </div>
             </div>
             @if($errors->has('sex'))
                 <div class="col-sm-3">
@@ -73,12 +88,16 @@
         <div class="form-group {{ $errors->has('activity_amount')?"has-error":"" }}">
             <label for="activity_amount" class="col-sm-2 control-label">活動量:</label>
             <div class="col-sm-7">
+
+              <div class="input-group">
                 <select name="activity_amount" id="activity_amount" class="form-control">
                     <option value=""></option>
                     @foreach (config('constants.ACTIVITY_AMOUNT_ARR') as $index => $ACTIVITY_AMOUNT)
                         <option value="{{ $index }}" {{ old('activity_amount', isset($userProfile)?strval($userProfile->activity_amount):'') === strval($index)? "selected": ""}}>{{ $ACTIVITY_AMOUNT['text'] }}</option>
                     @endforeach
                 </select>
+                <span class="input-group-addon"><span class="fa fa-id-card-o">&ensp;</span></span>
+              </div>
             </div>
             @if($errors->has('activity_amount'))
                 <div class="col-sm-3">
@@ -95,7 +114,7 @@
                 <div class="visible-xs">
                     <br>
                 </div>
-                <a class="btn btn-default btn-xs-block" href="{{ route('userProfile.read') }}">取消</a>
+                <a class="btn btn-default btn-xs-block" href="{{ route('user') }}">取消</a>
             </div>
         </div>
     </form>

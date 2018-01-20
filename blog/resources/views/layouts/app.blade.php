@@ -7,7 +7,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('static/bootstrap/css/bootstrap.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('static/bootstrap/css/bootstrap-theme.min.css') }}"> -->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <!-- Ionicons -->
@@ -191,7 +192,7 @@
                     </li>
                     @if( Auth::user()->type <3 )
                     <li>
-                    	<a >
+                    	<a href="{{ route('admin') }}">
                     		<i class="fa fa-server"></i><span>管理</span>
                     	</a>
                     </li>
@@ -278,7 +279,7 @@
     $.widget.bridge('uibutton', $.ui.button);
 </script>
 <!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('static/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- custom -->
 <script src="{{ asset('js/chart.min.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>

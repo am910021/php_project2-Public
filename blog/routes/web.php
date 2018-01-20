@@ -81,7 +81,18 @@ Route::group(['middleware' => ['auth', 'checkUser']], function () {
     Route::get('dateMealRecord/readList', 'MealRecord\DateMealRecordController@readList')->name('dateMealRecord.readList');
     Route::get('dateMealRecord/readChart', 'MealRecord\DateMealRecordController@readChart')->name('dateMealRecord.readChart');
 });
+
+Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::get('admin', 'Admin\AdminController@show')->name('admin');
+    Route::get('admin/user', 'Admin\AdminController@showUser')->name('admin.showUser');
+    Route::get('admin/user/edit/{id}', 'Admin\AdminController@userEdit')->name('admin.userEdit')->where('id', '[0-9]+');
+    Route::post('admin/user/edit/{id}', 'Admin\AdminController@userUpdate')->name('admin.userUpdate')->where('id', '[0-9]+');
+});
+
 /** test */
+    Route::get('test', function () {
+        return view('test');
+    });
 // Route::group(['middleware' => 'auth'], function () {
 //     Route::get('user/{id}', 'UserController@show');
 // });

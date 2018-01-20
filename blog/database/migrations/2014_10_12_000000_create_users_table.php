@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             
             //custom
             $table->tinyInteger('type')->default(3); //0 = root,  1 = manager,  2 = teacher,  3 = normal user
-            $table->integer('group')->nullable();
+            //$table->integer('group')->nullable();  //等group表加入後才會加入，使用add_group_to_users.php
             $table->string('remarks')->nullable();
             $table->string('enable_url')->nullable(); //帳號啟動的鏈結，帳號啟動後會設為空值
             $table->timestampTz('expiry_date')->nullable(); //帳號啟動的鏈結到期時間
