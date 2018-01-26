@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Exception;
-use Illuminate\Mail\Message;
 
 class LoginController extends Controller
 {

@@ -87,6 +87,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin/user', 'Admin\AdminController@showUser')->name('admin.showUser');
     Route::get('admin/user/edit/{id}', 'Admin\AdminController@userEdit')->name('admin.userEdit')->where('id', '[0-9]+');
     Route::post('admin/user/edit/{id}', 'Admin\AdminController@userUpdate')->name('admin.userUpdate')->where('id', '[0-9]+');
+    
+    Route::get('admin/group', 'Admin\AdminController@showGroup')->name('admin.showGroup');
+    Route::get('admin/group/edit/{id}', 'Admin\AdminController@groupEdit')->name('admin.groupEdit')->where('id', '[0-9]+');
+    Route::post('admin/group/edit/{id}', 'Admin\AdminController@groupUpdate')->name('admin.groupUpdate')->where('id', '[0-9]+');
 });
 
 /** test */

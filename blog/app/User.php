@@ -31,6 +31,11 @@ class User extends Authenticatable
     
     public function group()
     {
+        if ($this->group == NULL){
+            $this->group = 1;
+            $this->save();
+        }
+        
         return $this->hasOne('App\Group', 'id', 'group')->first();
     }
 }

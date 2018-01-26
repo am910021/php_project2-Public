@@ -19,7 +19,8 @@ class CreateGroupsTable extends Migration
             $table->integer('manager')->unsigned()->nullable();
             $table->foreign('manager')->references('id')->on('users');
             $table->string('name');
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
+            $table->boolean('canApply')->default(TRUE);
             $table->timestamps();
         });
     }

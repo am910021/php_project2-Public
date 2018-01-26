@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\User;
 
 use App\Group;
-use App\User;
+use App\HtmlBuilder;
 use App\UserProfile;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
-use Exception;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -36,16 +33,8 @@ class UserController extends Controller
     }
     
     public function edit(){
-        $html = '<div class="input-group"><input type="text" id="group_manager" class="form-control"><div class="input-group-addon"><a class="glyphicon glyphicon-search"></a></div></div>'.
-        '<table id="table" class="table"><thead><tr><th>id</th><th>名稱</th><th>管理者</th><th>備注</th></tr></thead><tbody>';
-        $str2 = '<tr><td><input type="radio" name="optradio" value="%d"></td><td>%s</td><td>%s</td><td>%s</td></tr>';
         
-        foreach (Group::all() as $group)
-        {
-            $html.=sprintf($str2,$group->id, $group->name ,$group->manager()->username,$group->remarks);
-        };
-        
-        $html.='</tbody></table>';
+        $html = (new HtmlBuilder())->setType("GROUP")->build();
         $groups = Group::all();
         return view('user.edit',['groups'=>$groups, 'html'=>$html]);
     }
@@ -56,9 +45,16 @@ class UserController extends Controller
         $rules = [
             'username' => 'required|string|max:255',
             'nickname' => 'required|string|max:255',
-            'group' => 'required',
+            'group' => ['required', 'numeric', Rule::exists('groups','id')->where(
+                function ($query)
+                {
+                    $query->where('canApply', true);
+        }) , ],
         ];
         $messages = [
+            'group.exists' => '所選擇的 群組 選項無效。',
+            'group.numeric' => '所選擇的 群組 選項無效。',
+            'group.required' => '群組 不能留空。',
             'username.required' => '姓名 不能留空。',
             'nickname.required' => '暱稱 不能留空。',
             'nickname.max' => '暱稱 不能多於 255 個字元。',
@@ -95,7 +91,7 @@ class UserController extends Controller
         ];
         $messages = [
             
-            'password2.required' => '暱稱 不能留空。',
+            'password2.required' => '確認密碼 不能留空。',
             'password2.same' => '確認密碼 與 密碼 必須相同。'
         ];
         $validator = Validator::make($input, $rules, $messages);

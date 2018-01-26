@@ -1,0 +1,10 @@
+//產生資料表
+php artisan migrate
+
+
+//產生基本資料
+php artisan db:seed --class=DefaultDataSeeder
+
+
+//產生測試資料
+php artisan db:seed --class=TestUserDeeder

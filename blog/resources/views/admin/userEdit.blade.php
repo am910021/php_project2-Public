@@ -7,40 +7,86 @@
 @section('javascript')
 <script src="{{ asset('static/bootstrap-dialog/js/bootstrap-dialog.js') }}"></script>
 <script type="text/javascript">
-var _group = {'1':'test','2':'test2','3':'test3','4':'test4',}
-var _list = "";
-
-for(var index in _group) {
-	_list += '<label><input type="radio" id="regular" name="optradio" value="'+index+'">'+_group[index]+'</label><br>';
-	}
-
 var $in_group = $("#group");
 var $in_group_text = $("#group_text");
+function searchText(input, table) {
+	  var filter, rows, row, td, i;
+	  filter = input.value.toUpperCase();
+	  rows = table.find("tr");
+	  rows.each(function(index) {
+	    td = $(this).find("td"); //判斷是否為空行
+	    if (td.length > 0) {
+	      	if (td[2].innerHTML.toUpperCase().indexOf(filter) > -1 ||
+	      			td[3].innerHTML.toUpperCase().indexOf(filter) > -1) {
+	      		this.style.display = "";
+	        } else {
+	        	this.style.display = "none";
+	        }
+	    }
+	  });
+	};
 
-console.log( _list );
-function selectGroup(){
-	BootstrapDialog.show({
-	    message: _list,
+	function searchId(input, table) {
+		  var filter, rows, row, td, i;
+		  filter = input.value.toUpperCase();
+		  rows = table.find("tr");
+		  rows.each(function(index) {
+		    td = $(this).find("td"); //判斷是否為空行
+		    if (td.length > 0) {
+		      	if (td[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
+		      		this.style.display = "";
+		        } else {
+		        	this.style.display = "none";
+		        }
+		    }
+		  });
+		};
+
+function updateRow($table){
+    	$table.find('tbody tr:even').addClass("warning");
+    	$table.find('tbody tr:odd').addClass("success");
+};
+
+function selectGroup() {
+	  BootstrapDialog.show({
+	    message: '{!! $table !!}',
+	    onshow: function(dialogRef) {
+	      var $table = dialogRef.getModalBody().find('#table');
+	      var $group_manager = dialogRef.getModalBody().find('#group_manager');
+	      var $group_id = dialogRef.getModalBody().find('#group_id');
+	      dialogRef.getModalBody().find("[name='optradio'][value='"+$in_group.val()+"']").prop('checked', true);;
+
+	      $group_manager.change(function() {
+	    	  $group_id.val("");
+	        searchText(this, $table);
+	        updateRow($table);
+	      });
+	      $group_id.change(function() {
+	    	  $group_manager.val("");
+	        searchId(this, $table);
+	        updateRow($table);
+	      });
+
+	      updateRow($table);
+	    },
 	    buttons: [{
-	        label: '確定',
-	        cssClass: 'btn-success',
-	        action: function(dialogRef) {
-	        	var fruit = dialogRef.getModalBody().find('input:checked');
-	        	$in_group.val(fruit.val());
-	        	$in_group_text.val(fruit.parent().text());
-	            dialogRef.close();
-	        }
-	    },{
-	        label: '取消',
-	        cssClass: 'btn-warning',
-	        action: function(dialogRef) {
-	        	var fruit = dialogRef.getModalBody().find('input:checked').val();
-	        	console.log(fruit);
-	            dialogRef.close();
-	        }
+	      label: '確定',
+	      cssClass: 'btn-success',
+	      action: function(dialogRef) {
+	        var fruit = dialogRef.getModalBody().find("[name='optradio']:checked");
+	        $in_group.val(fruit.val());
+	        $in_group_text.val(fruit.parent().next().next().html());
+	        dialogRef.close();
+	      }
+	    }, {
+	      label: '取消',
+	      cssClass: 'btn-warning',
+	      action: function(dialogRef) {
+	        dialogRef.close();
+	      }
 	    }]
-	});
-}
+	  });
+	};
 </script>
 @endsection
 
@@ -92,8 +138,8 @@ function selectGroup(){
                 <div class="form-group {{ $errors->has('group')?"has-error":"" }}">
                     <label for="group" class="col-sm-2 control-label">群組:</label>
                     <div class="col-sm-4">
-						<input type="hidden" class="form-control" id="group" name="group" value="{{ $user->group }}" >
-                    	<input type="text" class="form-control" id="group_text" aria-describedby="groupHelp" value="test" readonly onclick="selectGroup()" >
+						<input type="hidden" class="form-control" id="group" name="group" value="{{ $user->group()->id }}" >
+                    	<input type="text" class="form-control" id="group_text" aria-describedby="groupHelp" value="{{ $user->group()->name }}" readonly onclick="selectGroup()" >
                     	<small id="groupHelp" class="form-text text-muted">群組預設為無。</small>
                     </div>
                     <div class="col-sm-2">

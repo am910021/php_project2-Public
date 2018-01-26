@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -63,7 +62,7 @@ class RegisterController extends Controller
             $user->save();
             return Redirect::route('login')->with('message', '帳號申請成功，請您去信箱收信，並點擊啟動帳號。');
         }else {
-            return Redirect::route('login')->with('message', '帳號申請失敗，請您聯絡管理員。');
+            return Redirect::route('login')->with('message-fail', '帳號申請失敗，請您聯絡管理員。');
         }
         
         
@@ -88,7 +87,6 @@ class RegisterController extends Controller
         
         catch(Exception $e)
         {
-            throw $e;
             return false;
         }
     }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -12,7 +10,7 @@ class UserController extends Controller
      * Show the profile for the given user.
      *
      * @param  int  $id
-     * @return Response
+     * @return 
      */
     public function show($id)
     {

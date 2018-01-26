@@ -13,12 +13,11 @@
               <p>群組管理員： {{ $group }} </p>
               <p>教師人員： {{ $teacher }}</p>
               <p>一般會員： {{ $normal }}</p>
-              <p></p>
               <br>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
               <a class="btn btn-info btn-block" href="{{ route('admin.showUser') }}">會員管理</a>
             </div>
             <div class="col-md-9"></div>
@@ -28,17 +27,17 @@
           <div class="row">
             <div class="col-md-12">
               <h3>群組統計</h3>
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
+              <p>群組數量：{{ $groups }}</p>
+              <p>已加入群組會員數：{{ $inGroupMember }}</p>
+              <p>未加入群組會員數：{{ $noGroupMember }}</p>
+              <p>&nbsp;</p>
+
               <br>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3">
-              <a class="btn btn-info btn-block" href="{{ route('user.edit') }}">修改帳號設定</a>
+            <div class="col-md-4">
+              <a class="btn btn-info btn-block" href="{{ route('admin.showGroup') }}">群組管理</a>
             </div>
             <div class="col-md-9"></div>
           </div>

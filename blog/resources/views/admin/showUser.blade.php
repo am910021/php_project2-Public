@@ -6,63 +6,15 @@
 
 @section('javascript')
 <script src="{{ asset('static/bootstrap-table/bootstrap-table.js') }}"></script>
-<script src="{{ asset('static/bootstrap-table/extensions/cookie/bootstrap-table-cookie.js') }}"></script>
 <script src="{{ asset('static/bootstrap-table/extensions/filter-control/bootstrap-table-filter-control.js') }}"></script>
 <script src="{{ asset('static/bootstrap-table/locale/bootstrap-table-zh-TW.js') }}"></script>
+<script src="{{ asset('static/custom/table.js') }}"></script>
+<script src="{{ asset('static/custom/userTable.js') }}"></script>
 <script type="text/javascript">
-
-function updateRow(){
-	$('#table thead tr').addClass("info");
-	$('#table tbody tr:odd').addClass("success");
-	$('#table tbody tr:even').addClass("warning");
-}
-
-$(document).ready(function() {
-	updateRow();
-});
-
-$('#table').bootstrapTable({
-	onAll: function (number, size) {
-    	updateRow();
-        return false;
-    },
-    locale: "zh-TW",
-    columns: [
-            {
-                field: 'user_check',
-                //checkbox: true,
-                align: 'center',
-                valign: 'middle'
-            },{
-                field: 'user_email',
-            },{
-                field: 'user_username',
-            },{
-                field: 'user_nickname',
-            },{
-                field: 'user_type',
-            },{
-                field: 'user_group',
-            },{
-                field: 'user_isActive',
-                align: 'center',
-                valign: 'middle'
-            },{
-                field: 'user_edit',
-                align: 'center',
-                valign: 'middle'
-            }
-        ],
-
-	
-});
-
 function openUrl(i){
 	location.href = "{{ route('admin.userEdit',['id'=>'']) }}/"+i;
 }
-
 </script>
-
 @endsection
 
 
@@ -77,14 +29,12 @@ function openUrl(i){
 		data-show-columns="true"
         data-mobile-responsive="true"
         data-check-on-init="true"
-        data-cookie="true"
-        data-cookie-id-table="saveId"
 		data-pagination="true"
 		>
 			
             <thead >
               <tr>
-                <th data-field="user_check">
+                <th data-field="user_check" data-sortable="true">
                   #
                 </th>
                 <th data-field="user_email" data-filter-control="input" data-sortable="true">
@@ -103,9 +53,9 @@ function openUrl(i){
               </tr>
             </thead>
             <tbody>
-            @foreach($users as $index => $user)
+            @foreach($users as $user)
                <tr>
-				<td>{{ $index }}</td>
+				<td>{{ $user->id }}</td>
                 <td>
                   {{ str_limit($user->email, 32, '...') }}
                 </td>
@@ -116,7 +66,7 @@ function openUrl(i){
                   {{ $user->nickname }}
                 </td>
                 <td>{{ $typeStr[$user->type] }}</td>
-                <td>{{ $user->group }}</td>
+                <td>{{ $user->group()->name }}</td>
                 <td><label class="{{ $statusClass[$user->isActive] }}">{{ $status[$user->isActive] }}</label></td>
                 <td>
                    <button type="button" onClick="openUrl('{{ $user->id }}')" class="btn btn-warning btn-xs fa fa-pencil-square-o" ></button>
@@ -126,6 +76,13 @@ function openUrl(i){
             </tbody>
           </table>
         </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-offset-10 col-md-2 text-right">
+    		<br>
+    		<a class="btn btn-info btn-default btn-block" href="{{ route('admin') }}">回上一頁</a>
+    		<br>
+    	</div>
     </div>
   </div>
 
