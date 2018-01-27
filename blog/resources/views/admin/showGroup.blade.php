@@ -116,7 +116,11 @@ function openUrl(i){
 		</div>
 	</div>
     <div class="row">
-    	<div class="col-md-offset-10 col-md-2 text-right">
+    	<div class="col-md-offset-8 col-md-2 text-right">
+    		<br>
+    		<a class="btn btn-success btn-default btn-block" href="{{ route('admin.groupCreate') }}">新建群組</a>
+    	</div>
+    	<div class="col-md-2 text-right">
     		<br>
     		<a class="btn btn-info btn-default btn-block" href="{{ route('admin') }}">回上一頁</a>
     		<br>

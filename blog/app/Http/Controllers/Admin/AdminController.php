@@ -6,7 +6,7 @@ use App\HtmlBuilder;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
@@ -31,7 +31,14 @@ class AdminController extends Controller
     }
     
     public function showUser(){
-        $users = User::all();
+        
+        $users = null;
+        if(Auth::user()->type==0){
+            $users = User::all();
+        }else if(Auth::user()->type==1){
+            $users = User::where('type','>=','1')->get();
+        }
+        
         
         $status = ['停用','正常'];
         $statusClass = ['text-danger','text-success'];
@@ -48,7 +55,7 @@ class AdminController extends Controller
     }
     
     public function userEdit($id){
-        $user = User::where('id',$id)->first();
+        $user = User::where([['id','=',$id],['type','>=',Auth::user()->type]])->first();
         if($user == NULL){
             return Redirect::route('admin.showUser')->with('message-fail', '錯誤的會員資料。');
         }
@@ -67,7 +74,7 @@ class AdminController extends Controller
     }
     
     public function userUpdate(Request $request, $id){
-        $user = User::where('id',$id)->first();
+        $user = User::where([['id','=',$id],['type','>=',Auth::user()->type]])->first();
         if($user == NULL){
             return Redirect::route('admin.userShow')->with('message-fail', '錯誤的會員資料。');
         }
@@ -76,12 +83,13 @@ class AdminController extends Controller
             'username' => 'required|string',
             'nickname' => 'required|string',
             'group' => 'required|numeric',
-            'type' => 'required|numeric',
+            'type' => sprintf('required|numeric|between:%d,3',Auth::user()->type),
         ];
         $messages = [
-            
             'group.numeric' => '請選擇有效的 群組。',
-            'type.numeric' => '請選擇有效的 權限。'
+            'type.numeric' => '請選擇有效的 權限。',
+            'type.between' => '請選擇有效的 權限。',
+            'nickname.required'=> '暱稱 不能留空。'
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         //fails
@@ -113,6 +121,48 @@ class AdminController extends Controller
         return View::make('admin.showGroup',$message);
     }
     
+    public function groupCreate(){
+        $message = [
+            'table' => (new HtmlBuilder())->setType("USER")->build(),
+        ];
+        return View::make('admin.groupCreate',$message);
+    }
+    
+    
+    public function groupUpdate(Request $request){
+        $rules = [
+            'group_name' => 'required',
+            'group_manager' => ['required', 'numeric', Rule::exists('users','id')->where('isActive', 1), ],
+        
+        ];
+        $messages = [
+            'group_name.required' => '群組名稱 不能留空。',
+            'group_manager.exists' => '所選擇的 管理員 選項無效。',
+            'group_manager.numeric' => '所選擇的 管理員 選項無效。',
+            'group_manager.required' => '管理員 不能留空。',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        //fails
+        // $validator->passes()
+        if ($validator->fails()) {
+            return Redirect::route('admin.groupCreate')
+            ->withErrors($validator)
+            ->withInput();
+        }
+        
+        $group = new Group();
+        $group->manager = $request->group_manager;
+        $group->name = $request->group_name;
+        $group->remarks = $request->group_remarks;
+        $group->canApply = $request->group_apply == NULL;
+        $group->save();
+        
+        return Redirect::route('admin.showGroup')->with('message', '群組資料新增成功。');
+        
+        
+    }
+    
+    
     public function groupEdit($id){
         $group = Group::where('id',$id)->first();
         if($group == NULL){
@@ -128,7 +178,7 @@ class AdminController extends Controller
         return View::make('admin.groupEdit',$message);
     }
     
-    public function groupUpdate(Request $request, $id){
+    public function groupUpdateById(Request $request, $id){
         $group = Group::where('id',$id)->first();
         if($group == NULL){
             return Redirect::route('admin.groupShow')->with('message-fail', '錯誤的群組資料。');
@@ -136,11 +186,7 @@ class AdminController extends Controller
         
         $rules = [
             'group_name' => 'required',
-            'group_manager' => ['required', 'numeric', Rule::exists('users','id')->where(
-                function ($query)
-                {
-                    $query->where('isActive', 1);
-        }) , ],
+            'group_manager' => ['required', 'numeric', Rule::exists('users','id')->where('isActive', 1), ],
 
         ];
         $messages = [
@@ -160,7 +206,6 @@ class AdminController extends Controller
             ->withInput();
         }
         
-        $canApply = $request->group_apply == NULL;
         $group->manager = $request->group_manager;
         $group->name = $request->group_name;
         $group->remarks = $request->group_remarks;

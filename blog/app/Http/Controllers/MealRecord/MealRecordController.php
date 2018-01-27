@@ -132,11 +132,11 @@ class MealRecordController extends Controller
     public function getFood(Request $request)
     {
         $category = $request->category;
-        if (!$category) {
+        if ($category == NULL) {
             return response()->json([]);
         }
         $query = [['category', $category]];
-        if ($category == 6) {
+        if ($category == 1) {
             $user = Auth::user();
             $query[] = ['user_id', $user->id];
         }

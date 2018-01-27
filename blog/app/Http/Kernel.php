@@ -2,8 +2,9 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\GroupManageMiddleware;
+use App\Http\Middleware\ManagerMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -59,6 +60,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'checkUser' => \App\Http\Middleware\CheckUserMiddleware::class,
-        'admin' => AdminMiddleware::class,
+        'manager' => ManagerMiddleware::class,
+        'groupManage' => GroupManageMiddleware::class,
     ];
 }

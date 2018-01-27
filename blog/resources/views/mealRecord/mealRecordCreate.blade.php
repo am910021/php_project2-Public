@@ -10,107 +10,122 @@
 
 @section('content')
 
-    <form class="form-horizontal" action="{{ route('mealRecord.createStore') }}" method="post">
-        {{ csrf_field() }}
-        @if (isset($dateBool) && $dateBool)
-            <div class="form-group {{ $errors->has('date')?"has-error":"" }}">
-                <label for="category" class="col-sm-2 control-label">日期:</label>
-                <div class="col-sm-7">
-                    <input type="text" name="date" class="form-control datepicker" value="{{ old('date', '') }}">
-                </div>
-                @if($errors->has('date'))
-                    <div class="col-sm-3">
-                    <span class="help-block">
-                        <b>{{ $errors->first('date') }}</b>
-                    </span>
-                    </div>
-                @endif
-            </div>
-        @endif
-        <div class="form-group {{ $errors->has('category')?"has-error":"" }}">
-            <label for="category" class="col-sm-2 col-xs-12 control-label">類別:</label>
-            <div class="col-sm-5">
-                <select name="category" id="category" class="form-control">
-                    <option value=""></option>
-                    @if(isset($categorys))
-                        @foreach ($categorys as $category)
-                            <option value="{{ $category->category }}">{{ $category->category_name }}</option>
-                        @endforeach
-                    @endif
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <a class="btn btn-primary" href="{{ route('food.create') }}">新增食物</a>
-            </div>
-            @if($errors->has('category'))
-                <div class="col-sm-3">
-                    <span class="help-block">
-                        <b>{{ $errors->first('category') }}</b>
-                    </span>
-                </div>
-            @endif
-        </div>
-
-        <div class="form-group {{ $errors->has('food')?"has-error":"" }}">
-            <label for="food" class="col-sm-2 control-label">食物:</label>
-            <div class="col-sm-7">
-                <select name="food" id="food" class="form-control">
-                    <option value=""></option>
-                </select>
-            </div>
-
-            @if($errors->has('food'))
-                <div class="col-sm-3">
-                    <span class="help-block">
-                        <b>{{ $errors->first('food') }}</b>
-                    </span>
-                </div>
-            @endif
-        </div>
-
-        <div class="form-group {{ $errors->has('weight')?"has-error":"" }}">
-            <label for="weight" class="col-sm-2 col-xs-12 control-label">容量:</label>
-            <div class="col-sm-6 col-xs-10">
-                <input type="number" step="0.01" class="form-control" id="weight" name="weight"
-                       value="{{ old('weight', '') }}">
-            </div>
-            <div class="col-sm-1">
-                <label id="unit"></label>
-            </div>
-
-            @if($errors->has('weight'))
-                <div class="col-sm-3 col-xs-2">
-                    <span class="help-block">
-                        <b>{{ $errors->first('weight') }}</b>
-                    </span>
-                </div>
-            @endif
-        </div>
-        <div class="form-group {{ $errors->has('num')?"has-error":"" }}">
-            <label for="num" class="col-sm-2 control-label">數量:</label>
-            <div class="col-sm-7">
-                <input type="number" step="0.01" class="form-control" id="num" name="num"
-                       value="{{ old('num', '') }}">
-            </div>
-            @if($errors->has('num'))
-                <div class="col-sm-3">
-                    <span class="help-block">
-                        <b>{{ $errors->first('num') }}</b>
-                    </span>
-                </div>
-            @endif
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-8">
-                <button type="submit" class="btn btn-primary btn-xs-block">送出</button>
-                <div class="visible-xs">
-                    <br>
-                </div>
-                <a class="btn btn-default btn-xs-block" href="{{ route('mealRecord.read') }} ">取消</a>
-            </div>
-        </div>
-    </form>
+<form class="form-horizontal" action="{{ route('mealRecord.createStore') }}" method="post">
+  {{ csrf_field() }}
+  @if (isset($dateBool) && $dateBool)
+  <div class="form-group {{ $errors->has('date')?"has-error":"" }}">
+    <div class="col-md-offset-2 col-md-6 col-sm-7">
+      <div class="input-group">
+        <span class="input-group-addon">&nbsp;日&nbsp;&nbsp;&nbsp;期&nbsp;</span>
+        <input type="text" name="date" class="form-control datepicker" aria-describedby="dateHelp" value="{{ old('date', '') }}">
+        <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-calendar-o"></span>&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <small id="dateHelp" class="form-text text-muted">日期目前只開放前一天。</small>
+    </div>
+    @if($errors->has('date'))
+    <div class="col-md-4 col-sm-5">
+      <span class="help-block">
+      <b>{{ $errors->first('date') }}</b>
+      </span>
+    </div>
+    @endif
+  </div>
+  @endif
+  <div class="form-group {{ $errors->has('category')?"has-error":"" }}">
+    <div class="col-md-offset-2 col-md-6 col-sm-7">
+      <div class="input-group">
+        <span class="input-group-addon">&nbsp;類&nbsp;&nbsp;&nbsp;別&nbsp;</span>
+        <select name="category" id="category" class="form-control" aria-describedby="categoryHelp">
+          <option value=""></option>
+          @if(isset($categorys))
+            @foreach ($categorys as $category)
+            <option value="{{ $category->category }}">{{ $category->category_name }}</option>
+            @endforeach
+          @endif
+        </select>
+        <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-delicious"></span>&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <small id="categoryHelp" class="form-text text-muted">如果找不到你想要的類別，可以按旁邊的"新增食物"。</small>
+    </div>
+    <div class="col-md-2 col-sm-2">
+      <a class="btn btn-primary btn-xs-block" href="{{ route('food.create') }}">新增食物</a>
+    </div>
+    @if($errors->has('category'))
+    <div class="col-md-3 col-sm-3">
+      <span class="help-block">
+      <b>{{ $errors->first('category') }}</b>
+      </span>
+    </div>
+    @endif
+  </div>
+  <div class="form-group {{ $errors->has('food')?"has-error":"" }}">
+    <div class="col-md-offset-2 col-md-6 col-sm-7">
+      <div class="input-group">
+        <span class="input-group-addon">&nbsp;食&nbsp;&nbsp;&nbsp;物&nbsp;</span>
+        <select name="food" id="food" class="form-control" aria-describedby="foodHelp">
+          <option value=""></option>
+        </select>
+        <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-cutlery"></span>&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <small id="foodHelp" class="form-text text-muted">選擇類別後才能選食物。</small>
+    </div>
+    @if($errors->has('food'))
+    <div class="col-md-3 col-sm-5">
+      <span class="help-block">
+      <b>{{ $errors->first('food') }}</b>
+      </span>
+    </div>
+    @endif
+  </div>
+  <div class="form-group {{ $errors->has('weight')?"has-error":"" }}">
+    <div class="col-md-offset-2 col-md-6 col-sm-7">
+      <div class="input-group">
+        <span class="input-group-addon">內容物</span>
+          <input type="number" step="0.01" class="form-control" id="weight" name="weight"
+                aria-describedby="numberHelp" value="{{ old('weight', '') }}">
+          <span class="input-group-addon" id="unit" >&nbsp;&nbsp;&nbsp;<span class="fa fa-question"></span>&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <small id="numberHelp" class="form-text text-muted"></small>
+    </div>
+    <div class="col-md-1 col-sm-1">
+      <label id=""></label>
+    </div>
+    @if($errors->has('weight'))
+    <div class="col-md-3 col-sm-3">
+      <span class="help-block">
+      <b>{{ $errors->first('weight') }}</b>
+      </span>
+    </div>
+    @endif
+  </div>
+  <div class="form-group {{ $errors->has('weight')?"has-error":"" }}">
+    <div class="col-md-offset-2 col-md-6 col-sm-7">
+      <div class="input-group">
+        <span class="input-group-addon">&nbsp;數&nbsp;&nbsp;&nbsp;量&nbsp;</span>
+          <input type="number" step="0.01" class="form-control" id="num" name="num"
+                aria-describedby="numHelp" value="{{ old('num', '') }}">
+          <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question"></span>&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <small id="numHelp" class="form-text text-muted"></small>
+    </div>
+    @if($errors->has('num'))
+    <div class="col-md-3 col-sm-5">
+      <span class="help-block">
+      <b>{{ $errors->first('num') }}</b>
+      </span>
+    </div>
+    @endif
+  </div>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-8">
+      <button type="submit" class="btn btn-primary btn-xs-block">送出</button>
+      <div class="visible-xs">
+        <br>
+      </div>
+      <a class="btn btn-default btn-xs-block" href="{{ route('mealRecord.read') }}">取消</a>
+    </div>
+  </div>
+</form>
 
 @endsection
 
@@ -119,11 +134,13 @@
         $(document).ready(function () {
             $(document).on('change', '#category', function () {
                 const category = $('#category option:selected').val();
+                
                 $.ajax({
                     url: "{{ route('mealRecord.getFood') }}",
                     method: 'GET',
                     data: {'category': category}
                 }).done(function (data) {
+                	console.log(data);
                     const $food = $('#food');
                     $food.html('');
                     $('#weight').val('');
@@ -167,7 +184,7 @@
                 months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
                 monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
                 today: "今天",
-                clear: "清楚",
+                clear: "清除",
                 format: 'yyyy-mm-dd',
                 titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
                 weekStart: 0
@@ -176,6 +193,7 @@
             yesterday.setDate(yesterday.getDate() - 1);
             $('.datepicker').datepicker({
                 'autoclose': true,
+                'startDate': yesterday,
                 'endDate': yesterday,
                 'format': 'yyyy-mm-dd',
                 language: 'zh-hant'

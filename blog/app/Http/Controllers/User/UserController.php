@@ -8,10 +8,12 @@ use App\UserProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -109,5 +111,19 @@ class UserController extends Controller
         
         Auth::logout();
         return Redirect::route('login')->with('message', '密碼已經修改成功，請重新登入。');
+    }
+    
+    
+    public function rank(){
+//         $user = DB::table('meal_records')->selectRaw('count(user_id), user_id')->groupBy('user_id');
+                            
+        
+//         $message = [
+//             'user' => $user,
+            
+//         ];
+        
+        
+//         return View::make('user.rank',$message);
     }
 }

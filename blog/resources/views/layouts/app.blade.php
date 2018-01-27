@@ -190,10 +190,22 @@
                             <i class="fa fa-book"></i><span>帳號資料</span>
                         </a>
                     </li>
-                    @if( Auth::user()->type <3 )
+                    <li>
+                    	<a href="{{ route('user.rank') }}">
+                    		<i class="fa fa-trophy"></i><span>排行榜</span>
+                    	</a>
+                    </li>
+                    @if( Auth::user()->type <= 1 )
                     <li>
                     	<a href="{{ route('admin') }}">
                     		<i class="fa fa-server"></i><span>管理</span>
+                    	</a>
+                    </li>
+                    @endif
+                    @if( Auth::user()->type <= 2 )
+                    <li>
+                    	<a href="{{ route('group.manage') }}">
+                    		<i class="fa fa-server"></i><span>群組成員管理</span>
                     	</a>
                     </li>
                     @endif

@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Common;
     
     //
     protected $fillable = [
@@ -37,6 +40,36 @@ class User extends Authenticatable
         }
         
         return $this->hasOne('App\Group', 'id', 'group')->first();
+    }
+    
+    
+    public function getSevenMealRecordAmount()
+    {
+        $count = 0;
+        $now = Carbon::today();
+        $temp = [];
+        $date = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek();
+        $next_date = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek()->addDay(1);
+        for ($i = 0; $i <= 6; $i++) {
+            $date->addDay(1);
+            $next_date->addDay(1);
+            
+            $mealRecord = MealRecord::where('user_id',$this->id)->whereDate('datetime', '>=', $date->toDateString())
+            ->whereDate('datetime', '<', $next_date->toDateString())->count();
+            
+            if($mealRecord > 0){
+                $count++;
+            }
+            
+        }
+
+        
+        
+        
+        //$mealRecordDay = MealRecordDay::where([['user_id','=', $this->id],[]])->whereDate('date', $date)->count();
+
+
+        return $count;
     }
 }
 

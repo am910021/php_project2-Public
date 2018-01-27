@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Closure;
 
-class AdminMiddleware
+class ManagerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,8 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::User()->type == 0){
+        //0 = root,  1 = manager,  2 = teacher,  3 = normal user
+        if (Auth::User()->type <= 1){
             return $next($request);
         }else{
             return Redirect::route('user');

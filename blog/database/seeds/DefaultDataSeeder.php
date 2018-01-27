@@ -43,18 +43,22 @@ class DefaultDataSeeder extends Seeder {
         $group->save();
         $user->group = $group->id;
         $user->save();
-        $this->createFoodsCategory($user);
+//         $user = new User;
+//         $user->id = 1;
+//         $this->createFoodsCategory($user);
     }
     
     
     public function createFoodsCategory($user){
         Food::truncate();
         $CATEGORY_ARR = [
-            "1" => "飲料類",
-            "2" => "加工食品類",
-            "3" => "糕餅類",
-            "4" => "冰品類",
-            "5" => "糖果類"
+            "0" => "無攝食",
+            "1" => "自行輸入",
+            "2" => "飲料類",
+            "3" => "加工食品類",
+            "4" => "糕餅類",
+            "5" => "冰品類",
+            "6" => "糖果類",
         ];
         $path = storage_path()."/json/category.json";
         $path = file_get_contents($path);

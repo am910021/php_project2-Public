@@ -45,6 +45,7 @@ Route::get('register/enable/success', 'Login\RegisterController@success')->name(
 Route::group(['middleware' => 'auth'], function () {
     /** user center*/
     Route::get('user', 'User\UserController@show')->name('user');
+    Route::get('user/rank', 'User\UserController@rank')->name('user.rank');
     Route::get('user/edit', 'User\UserController@edit')->name('user.edit');
     Route::post('user/update', 'User\UserController@update')->name('user.update');
     Route::get('user/password', 'User\UserController@pwdEdit')->name('user.password');
@@ -82,15 +83,24 @@ Route::group(['middleware' => ['auth', 'checkUser']], function () {
     Route::get('dateMealRecord/readChart', 'MealRecord\DateMealRecordController@readChart')->name('dateMealRecord.readChart');
 });
 
-Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::group(['middleware' => ['auth', 'manager']], function () {
     Route::get('admin', 'Admin\AdminController@show')->name('admin');
     Route::get('admin/user', 'Admin\AdminController@showUser')->name('admin.showUser');
     Route::get('admin/user/edit/{id}', 'Admin\AdminController@userEdit')->name('admin.userEdit')->where('id', '[0-9]+');
     Route::post('admin/user/edit/{id}', 'Admin\AdminController@userUpdate')->name('admin.userUpdate')->where('id', '[0-9]+');
     
     Route::get('admin/group', 'Admin\AdminController@showGroup')->name('admin.showGroup');
+    Route::get('admin/group/create', 'Admin\AdminController@groupCreate')->name('admin.groupCreate');
+    Route::post('admin/group/createUpdate', 'Admin\AdminController@groupUpdate')->name('admin.groupUpdate');
     Route::get('admin/group/edit/{id}', 'Admin\AdminController@groupEdit')->name('admin.groupEdit')->where('id', '[0-9]+');
-    Route::post('admin/group/edit/{id}', 'Admin\AdminController@groupUpdate')->name('admin.groupUpdate')->where('id', '[0-9]+');
+    Route::post('admin/group/edit/{id}', 'Admin\AdminController@groupUpdateById')->name('admin.groupUpdateById')->where('id', '[0-9]+');
+});
+
+Route::group(['middleware' => ['auth', 'groupManage']], function () {
+    Route::get('group/manage', 'GroupManage\GroupManageController@show')->name('group.manage');
+    Route::get('group/manage/detail/{id}', 'GroupManage\GroupManageController@groupDetail')->name('group.detail')->where('id', '[0-9]+');
+    Route::post('group/manage/update/{id}', 'GroupManage\GroupManageController@groupUpdate')->name('group.update')->where('id', '[0-9]+');
+    Route::post('group/manage/apply/{id}', 'GroupManage\GroupManageController@groupApply')->name('group.apply')->where('id', '[0-9]+');
 });
 
 /** test */

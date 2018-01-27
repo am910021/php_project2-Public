@@ -27,9 +27,26 @@ class Group extends Model
         return $this->hasOne('App\User', 'id', 'manager')->first();
     }
     
+    
+    public function member(){
+        return User::where('group',$this->id)->get();
+    }
+    
+    
     public function amount(){
         
-        return User::where('group',$this->id)->count();
+        return $this->member()->count();
         
     }
+    
+    public function getamountAttribute()
+    {
+        return $this->member()->count();
+    }
+    
+    public function getapplyingAttribute()
+    {
+        return $this->member()->where('isApplying',true)->count();
+    }
+    
 }
