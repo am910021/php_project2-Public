@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form class="form-horizontal" action="{{ route('food.createStore') }}" method="post">
+    <form class="form-horizontal" action="{{ route('food.createStore') }}?url={{ $url }}" method="post">
         {{ csrf_field() }}
         <div class="form-group {{ $errors->has('name')?"has-error":"" }}">
             <label for="name" class="col-sm-2 control-label">名稱:</label>

@@ -35,6 +35,7 @@ class TestUserDeeder extends Seeder {
             $user->password = Hash::make('test');
             $user->type = 3;
             $user->group = rand(1,11);
+            $user->isApplying = 0;
             $user->save();
         }
     }

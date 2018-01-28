@@ -18,6 +18,7 @@ class AddGroupToUsersTable extends Migration
             //
             $table->integer('group')->unsigned()->nullable();
             $table->foreign('group')->references('id')->on('groups');
+            $table->tinyInteger('isApplying')->default(1); //0 = success ,  1 = applying ,  2 = reject
         });
     }
 

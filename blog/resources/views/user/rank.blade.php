@@ -7,30 +7,42 @@
 	
 @section('content')
 
-{{ count($user) }}
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12">
       <ul class="list-group">
       
+      @foreach($rank as $index=>$user)
+      @if($user == null )
         <li class="list-group-item list-group-item-default">
           <div class="container-fluid">
             <div class="col-sm-3 col-xs-6">
-              01:00:38
+              {{ $index+1 }}
             </div>
             <div class="col-sm-3 col-xs-6">
-              熱量 136 大卡
+              無資料
+            </div>
+          </div>
+        </li>
+      @else
+        <li class="list-group-item list-group-item-default">
+          <div class="container-fluid">
+            <div class="col-sm-3 col-xs-6">
+              {{ $index+1 }}
             </div>
             <div class="col-sm-3 col-xs-6">
-              糖量比例 23.96
+              {{ $user->username }}
+            </div>
+            <div class="col-sm-3 col-xs-6">
+              {{ $user->total }}
             </div>
             <div class="col-sm-3 col-xs-6">
               糖 34 公克
             </div>
           </div>
         </li>
-        
+      @endif
+      @endforeach
       </ul>
     </div>
   </div>

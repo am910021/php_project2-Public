@@ -34,8 +34,8 @@ class GroupManageController extends Controller
             'group' => $group,
             'table' => (new HtmlBuilder())->setType("USER")->build(),
             'status' => ['checked',''],
-            'apply' => User::where([['group',$id],['isApplying',true]])->get(),
-            'member' => User::where([['group',$id],['isApplying',false]])->get(),
+            'apply' => User::where([['group',$id],['isApplying',1]])->get(),
+            'member' => User::where([['group',$id],['isApplying',0]])->get(),
             
         ];
         
@@ -86,20 +86,22 @@ class GroupManageController extends Controller
         $checkboxes = $request->input('user_apple');
         
         $str = "";
+        if($checkboxes == null){
+            return Redirect::route('group.detail', ['id'=>$gid])->with('message-fail', '未選取任何成員。');
+        }
+        $apply_reject = $request->input('apply_reject');
         foreach($checkboxes as $uid) {
             $user = User::find($uid);
             if($user->group != $gid){
                 continue;
             }
             
-            $user->isApplying = false;
+            $user->isApplying = $apply_reject;
             $user->save();
         }
 
         //$len = $request->input('user_apple');
         
-        
-
         return Redirect::route('group.detail', ['id'=>$gid])->with('message', '群組資料儲存成功。');
     }
     

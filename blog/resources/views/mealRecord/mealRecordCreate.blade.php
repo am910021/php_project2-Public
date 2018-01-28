@@ -193,7 +193,7 @@
             yesterday.setDate(yesterday.getDate() - 1);
             $('.datepicker').datepicker({
                 'autoclose': true,
-                'startDate': yesterday,
+                //'startDate': yesterday,
                 'endDate': yesterday,
                 'format': 'yyyy-mm-dd',
                 language: 'zh-hant'

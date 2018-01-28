@@ -65,6 +65,8 @@ Route::group(['middleware' => ['auth', 'checkUser']], function () {
     /** meal record 當日*/
     Route::get('mealRecord/read', 'MealRecord\MealRecordController@read')->name('mealRecord.read');
     Route::get('mealRecord/create', 'MealRecord\MealRecordController@create')->name('mealRecord.create');
+    Route::get('mealRecord/edit/{id}', 'MealRecord\MealRecordController@edit')->name('mealRecord.edit')->where('id', '[0-9]+');
+    Route::post('mealRecord/update/{id}', 'MealRecord\MealRecordController@update')->name('mealRecord.update')->where('id', '[0-9]+');
     Route::post('mealRecord/createStore', 'MealRecord\MealRecordController@createStore')->name('mealRecord.createStore');
     Route::get('mealRecord/createDate', 'MealRecord\MealRecordController@createDate')->name('mealRecord.createDate');
     /** create food */

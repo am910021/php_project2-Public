@@ -71,5 +71,35 @@ class User extends Authenticatable
 
         return $count;
     }
+    
+    public function getAmount()
+    {
+        $count = 0;
+        $now = Carbon::today();
+        $temp = [];
+        $date = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek()->subDay(1);
+        $next_date = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek();
+        for ($i = 0; $i <= 6; $i++) {
+            $date->addDay(1);
+            $next_date->addDay(1);
+            
+            $mealRecord = MealRecord::where('user_id',$this->id)->whereDate('datetime', '>=', $date->toDateString())
+            ->whereDate('datetime', '<', $next_date->toDateString())->count();
+            
+            if($mealRecord > 0){
+                $count++;
+            }
+            
+        }
+        
+        
+        
+        
+        //$mealRecordDay = MealRecordDay::where([['user_id','=', $this->id],[]])->whereDate('date', $date)->count();
+        
+        
+        return $count;
+    }
+    
 }
 

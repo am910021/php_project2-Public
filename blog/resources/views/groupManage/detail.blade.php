@@ -12,6 +12,16 @@
     </style>
 @endsection
 
+@section('javascript')
+<script type="text/javascript">
+function form_sumbit(type){
+	$("#apply_reject").val(type);
+	$("#apply_reject_form").submit();
+}
+</script>
+@endsection
+
+
 @section('content')
 
 
@@ -98,6 +108,7 @@
                     <div class="form-group">
                       <div class="col-sm-2">
                         <button type="submit" class="btn btn-danger btn-xs-block">儲存</button>
+                        <br class="visible-xs">
                       </div>
                       <div class="col-sm-2">
                         <a href="{{ route('admin.showGroup') }}" class="btn btn-primary btn-xs-block">取消</a>
@@ -126,8 +137,9 @@
           <div id="collapse-1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-1">
             <div class="panel-body">
             @if( count($apply) > 0 )
-            <form action="{{ route('group.apply',['id'=>$group->id]) }}" method="post" >
+            <form id="apply_reject_form" action="{{ route('group.apply',['id'=>$group->id]) }}" method="post" >
             {{ csrf_field() }}
+            <input type="hidden" id="apply_reject" name="apply_reject" >
               <ul class="list-group">
               	@foreach($apply as $user)
                     <li class="list-group-item list-group-item-default">
@@ -148,7 +160,16 @@
                     </li>
                 @endforeach
               </ul>
-              <button type="submit" class="btn btn-danger btn-xs-block">同意申請</button>
+              <div class="row">
+              	<div class="col-sm-2">
+              		<button type="button" onclick="form_sumbit(0)" class="btn btn-success btn-xs-block">同意申請</button>
+              		<br class="visible-xs">
+              	</div>
+              	<div class="col-sm-2">
+              		<button type="button" onclick="form_sumbit(2)" class="btn btn-danger btn-xs-block">拒絕申請</button>
+              	</div>
+              </div>
+              
               </form>
             @else
                   <ul class="list-group">

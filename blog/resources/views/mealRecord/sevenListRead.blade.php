@@ -1,4 +1,4 @@
-@extends('layouts.app')
+	@extends('layouts.app')
 
 @section('title')
     七日攝食列表
@@ -82,22 +82,32 @@
                                 @foreach($mealRecordDay->mealRecords() as $mealRecord)
 
                                     <li class="list-group-item list-group-item-default">
-
-                                        <div class="container-fluid">
-                                            <div class="col-sm-3 col-xs-6">
-                                                {{ $mealRecord->datetimeByTime }}
-                                            </div>
-                                            <div class="col-sm-3 col-xs-6">
-                                                熱量 {{ $mealRecord->calories }} 大卡
-                                            </div>
-                                            <div class="col-sm-3 col-xs-6">
-                                                糖量比例 {{ $mealRecord->gramByPercent() }}
-                                            </div>
-                                            <div class="col-sm-3 col-xs-6">
-                                                糖 {{ $mealRecord->weight }} 公克
-                                            </div>
+                                      <div class="container-fluid">
+                                        <div class="col-md-2 col-sm-4 col-xs-6">
+                                          {{ $mealRecord->datetimeByTime }}
+                                          <br class="visible-xs">
                                         </div>
-
+                                        <div class="col-md-2 col-sm-4 col-xs-6">
+                                          熱量 {{ $mealRecord->calories }} 大卡
+                                          <br class="visible-xs">
+                                        </div>
+                                        <div class="col-md-2 col-sm-4 col-xs-6">
+                                          糖量比例 {{ $mealRecord->gramByPercent() }}
+                                          <br class="visible-xs">
+                                        </div>
+                                        <div class="col-md-2 col-sm-4 col-xs-6">
+                                          糖量 {{ $mealRecord->weight }}
+                                          <br class="visible-xs">
+                                        </div>
+                                        <div class="col-md-2 col-sm-4 col-xs-6">
+                                          {{ $mealRecord->name }}
+                                          <br class="visible-xs">
+                                        </div>
+                                        <div class="col-md-2 col-sm-4 col-xs-6">
+                                          <a class="btn btn-warning" href="{{ route('mealRecord.edit', ['id'=>$mealRecord->id]) }}">修改</a>
+                                          <br>
+                                        </div>
+                                      </div>
                                     </li>
 
                                 @endforeach

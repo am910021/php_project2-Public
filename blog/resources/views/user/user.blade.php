@@ -30,7 +30,7 @@
               <p >電子郵件: {{ Auth::user()->email }}</p>
               <p >使用者名字: {{ Auth::user()->username }}</p>
               <p >暱稱: {{ Auth::user()->nickname }}</p>
-              <p >群組: {{ Auth::user()->group()->name }}</p>
+              <p >群組: {{ Auth::user()->group()->name }}({{ $status[Auth::user()->isApplying] }})</p>
               <p>備注: {{ Auth::user()->remarks }}</p>
               <br>
             </div>

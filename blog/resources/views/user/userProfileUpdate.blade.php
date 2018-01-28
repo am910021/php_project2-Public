@@ -123,5 +123,299 @@
             </div>
         </div>
     </form>
+<div class="row">
+  <div class="col-md-6 well">
+    <h3>
+      低
+    </h3>
+    <div class="row ">
+      <div class="col-md-6">
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            生活動作
+          </div>
+          <div class="col-xs-6 col-md-6">
+            時間(小時)
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            安靜
+          </div>
+          <div class="col-xs-6 col-md-6">
+            12
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            站立
+          </div>
+          <div class="col-xs-6 col-md-6">
+            11
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            步行
+          </div>
+          <div class="col-xs-6 col-md-6">
+            1
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            快走
+          </div>
+          <div class="col-xs-6 col-md-6">
+            0
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            肌肉運動
+          </div>
+          <div class="col-xs-6 col-md-6">
+            0
+          </div>
+        </div>
+        <br>
+      </div>
 
+      <div class="col-md-6 bg-success">
+        <div class="row ">
+          <div class="col-md-12">
+            日常生活的內容
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            靜態活動，睡覺、靜臥或悠閒的坐著(例如:坐著看書、看電視…等等)。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-6 well">
+    <h3>
+      稍低
+    </h3>
+    <div class="row ">
+      <div class="col-md-6">
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            生活動作
+          </div>
+          <div class="col-xs-6 col-md-6">
+            時間(小時)
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            安靜
+          </div>
+          <div class="col-xs-6 col-md-6">
+            10
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            站立
+          </div>
+          <div class="col-xs-6 col-md-6">
+            9
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            步行
+          </div>
+          <div class="col-xs-6 col-md-6">
+            5
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            快走
+          </div>
+          <div class="col-xs-6 col-md-6">
+            0
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            肌肉運動
+          </div>
+          <div class="col-xs-6 col-md-6">
+            0
+          </div>
+        </div>
+        <br>
+      </div>
+
+
+      <div class="col-md-6 bg-success">
+        <div class="row ">
+          <div class="col-md-12">
+            日常生活的內容
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            站立活動，身體活動程度較低、熱量較少，例如:站著說話、烹飪、開車、打電腦。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 well">
+    <h3>
+      適度
+    </h3>
+    <div class="row ">
+      <div class="col-md-6">
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            生活動作
+          </div>
+          <div class="col-xs-6 col-md-6">
+            時間(小時)
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            安靜
+          </div>
+          <div class="col-xs-6 col-md-6">
+            9
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            站立
+          </div>
+          <div class="col-xs-6 col-md-6">
+            8
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            步行
+          </div>
+          <div class="col-xs-6 col-md-6">
+            6
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            快走
+          </div>
+          <div class="col-xs-6 col-md-6">
+            1
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            肌肉運動
+          </div>
+          <div class="col-xs-6 col-md-6">
+            0
+          </div>
+        </div>
+        <br>
+      </div>
+
+      <div class="col-md-6 bg-success">
+        <div class="row ">
+          <div class="col-md-12">
+            日常生活的內容
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            身體活程度為正常速度、熱量消耗較少，例如:在公車或捷運上著、用洗衣機洗衣服、用吸塵器打掃、散步、購物...等強度。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-6 well">
+    <h3>
+      高
+    </h3>
+    <div class="row ">
+      <div class="col-md-6">
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            生活動作
+          </div>
+          <div class="col-xs-6 col-md-6">
+            時間(小時)
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            安靜
+          </div>
+          <div class="col-xs-6 col-md-6">
+            9
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            站立
+          </div>
+          <div class="col-xs-6 col-md-6">
+            8
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            步行
+          </div>
+          <div class="col-xs-6 col-md-6">
+            5
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            快走
+          </div>
+          <div class="col-xs-6 col-md-6">
+            1
+          </div>
+        </div>
+        <div class="row bg-info">
+          <div class="col-xs-6 col-md-6">
+            肌肉運動
+          </div>
+          <div class="col-xs-6 col-md-6">
+            1
+          </div>
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 bg-success">
+        <div class="row ">
+          <div class="col-md-12">
+            日常生活的內容
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            站立活動，身體活動程度較低、熱量較少，例如:站著說話、烹飪、開車、打電腦。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection

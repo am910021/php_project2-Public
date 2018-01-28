@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Login;
 
+use App\HtmlBuilder;
 use App\User;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use Exception;
 
 
@@ -18,7 +20,8 @@ class RegisterController extends Controller
     //
     public function show()
     {
-        return view('login.register');
+        $html = (new HtmlBuilder())->setType("GROUP")->build();
+        return View::make('login.register',['html'=>$html]);
         // return View::make('login.login');
     }
 
@@ -54,10 +57,17 @@ class RegisterController extends Controller
         $user->nickname = $request->nickname;
         $user->password = Hash::make($request->password);
         $user->group = $request->group;
+        $user->isApplying = $user->group==1?0:1;
         $user->remarks = $request->remarks;
         $user->enable_url = hash('sha256', $request->email . $current_time->toDateTimeString());
         $user->expiry_date = $current_time;
                
+        if(1){
+            $user->save();
+            return Redirect::route('login')->with('message', '帳號申請成功，請您去信箱收信，並點擊啟動帳號。');
+        }
+        
+        
         if($this->sendMail($user->username, $user->email, $user->enable_url)){
             $user->save();
             return Redirect::route('login')->with('message', '帳號申請成功，請您去信箱收信，並點擊啟動帳號。');

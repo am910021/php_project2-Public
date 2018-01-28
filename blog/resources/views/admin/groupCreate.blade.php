@@ -114,7 +114,7 @@ function selectGroup() {
             <small id="managerHelp" class="form-text text-muted">管理員名稱只有教師以上的成員會顯示，一般成員會顯示暱稱。</small>
           </div>
           <div class="col-md-2 col-sm-3">
-            <button type="button" onclick="selectGroup()" class="btn btn-info btn-block">選擇管理選</button>
+            <button type="button" onclick="selectGroup()" class="btn btn-info btn-block">選擇管理者</button>
           </div>
           @if($errors->has('group_manager'))
           <div class="col-md-3 col-sm-2">

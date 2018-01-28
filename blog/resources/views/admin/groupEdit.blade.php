@@ -102,7 +102,7 @@ function selectGroup() {
   </div>
   <div class="row">
     <div class="col-md-12">
-      <form class="form-horizontal" action="{{ route('admin.groupUpdate', ['id'=>$group->id]) }}" method="post">
+      <form class="form-horizontal" action="{{ route('admin.groupUpdateById', ['id'=>$group->id]) }}" method="post">
       	{{ csrf_field() }}
         <div class="form-group {{ $errors->has('group_manager')?"has-error":"" }}">
           <div class="col-md-offset-2 col-md-5 col-sm-7">

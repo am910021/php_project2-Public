@@ -12,9 +12,14 @@ use Illuminate\Support\Facades\Validator;
 class FoodController extends Controller
 {
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('mealRecord.foodCreate');
+        $message = [
+            'url' => $request->url,
+            
+        ];
+        
+        return view('mealRecord.foodCreate',$message);
     }
 
     public function createStore(Request $request)
@@ -59,6 +64,13 @@ class FoodController extends Controller
         $food->kcal = $request->kcal;
         $food->save();
 
+        
+        if($request->url != null){
+            return Redirect::to($request->url)
+            ->with('message', '新增成功');
+        }
+        
+        
         return Redirect::route('mealRecord.create')
                 ->with('message', '新增成功');
 

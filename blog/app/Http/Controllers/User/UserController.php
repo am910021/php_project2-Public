@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Group;
 use App\HtmlBuilder;
+use App\User;
 use App\UserProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,23 +16,35 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
+use App\MealRecord;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
     //
     public function read(){
-        $user = Auth::user();
-        return view('user.read')->with('user', $user);
+        $message = [
+            'user' => Auth::user(),
+            'status' => ['已加入','申請中','被拒絕']
+            
+        ];
+        return view('user.read')->with('user', $message);
     }
 
     public function show(){
         $user = Auth::user();
         if (!$user->isUser){
-            Session::put('message', '請先新增個人資料');
-            return view('user.userProfileUpdate');
+            return Redirect::route('userProfile.read')->with('message', '請先新增個人資料。');
         }
-        $userProfile = UserProfile::where('user_id',$user->id)->first();
-        return view('user.user')->with('userProfile', $userProfile);
+        
+        $message = [
+            'user' => Auth::user(),
+            'status' => ['已加入','申請中','被拒絕'],
+            'userProfile' => UserProfile::where('user_id',$user->id)->first(),
+            
+        ];
+        
+        return View::make('user.user',$message);
     }
     
     public function edit(){
@@ -48,9 +61,11 @@ class UserController extends Controller
             'username' => 'required|string|max:255',
             'nickname' => 'required|string|max:255',
             'group' => ['required', 'numeric', Rule::exists('groups','id')->where(
-                function ($query)
+                function ($query) use ($request)
                 {
-                    $query->where('canApply', true);
+                    if(Auth::user()->group != $request->group){
+                        $query->where('canApply', true);
+                    }
         }) , ],
         ];
         $messages = [
@@ -73,7 +88,10 @@ class UserController extends Controller
         $user = Auth::user();
         $user->username = $request->username;
         $user->nickname = $request->nickname;
-        $user->group = $request->group;
+        if( $user->group != $request->group){
+            $user->group = $request->group;
+            $user->isApplying = $user->group==1?0:1;
+        }
         $user->remarks = $request->remarks;
         $user->save();
         
@@ -115,15 +133,42 @@ class UserController extends Controller
     
     
     public function rank(){
-//         $user = DB::table('meal_records')->selectRaw('count(user_id), user_id')->groupBy('user_id');
-                            
+        //$user = DB::table('meal_records')->selectRaw('count(user_id), user_id')->groupBy('user_id')->orderBy('user_id','DESC');
         
-//         $message = [
-//             'user' => $user,
-            
-//         ];
+        $now = Carbon::today();
+        $lastweek = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek();
+        $thisweek = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek()->addDay(7);
+        
+        $datas2 = User::join('meal_records', 'meal_records.user_id', '=', 'users.id')
+        ->selectRaw('(SUM(meal_records.percent) / Count(DISTINCT meal_records.date)) as total,Count(DISTINCT meal_records.date) as day, users.*')->where('users.group',Auth::user()->group)
+        ->whereDate('meal_records.datetime', '>=', $lastweek)->whereDate('meal_records.datetime', '<', $thisweek)
+        ->groupBy('meal_records.user_id')->orderBy('total','DESC')->get();
         
         
-//         return View::make('user.rank',$message);
+        
+        
+       
+        $rank = [null,null,null,null,null,null,null,null,null,null];
+        $self = null;
+        
+        foreach ($datas2 as $index=>$data){
+            $rank[$index] = $data;
+        }
+        
+        
+        
+        //$datas2 = MealRecord::selectRaw('SUM(percent) as total')->get();
+        
+        
+        
+        
+        $message = [
+            'users' => $datas2,
+            'rank' => $rank,
+        ];
+        
+        
+        return response()->json( $datas2);
+       return View::make('user.rank',$message);
     }
 }

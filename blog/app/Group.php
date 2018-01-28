@@ -29,7 +29,7 @@ class Group extends Model
     
     
     public function member(){
-        return User::where('group',$this->id)->get();
+        return User::where('group',$this->id)->where('isApplying',0)->get();
     }
     
     
@@ -46,7 +46,7 @@ class Group extends Model
     
     public function getapplyingAttribute()
     {
-        return $this->member()->where('isApplying',true)->count();
+        return User::where('group',$this->id)->where('isApplying',1)->count();
     }
     
 }

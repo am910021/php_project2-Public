@@ -42,10 +42,11 @@ class DefaultDataSeeder extends Seeder {
         $group->manager = $user->id;
         $group->save();
         $user->group = $group->id;
+        $user->isApplying = 0;
         $user->save();
 //         $user = new User;
 //         $user->id = 1;
-//         $this->createFoodsCategory($user);
+         $this->createFoodsCategory($user);
     }
     
     
