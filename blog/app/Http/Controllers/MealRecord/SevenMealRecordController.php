@@ -4,10 +4,12 @@ namespace App\Http\Controllers\MealRecord;
 
 use App\MealRecord;
 use App\MealRecordDay;
+use App\User;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class SevenMealRecordController extends Controller
 {
@@ -16,12 +18,36 @@ class SevenMealRecordController extends Controller
 
     public function readList()
     {
-        $mealRecordDays = $this->getSevenMealRecordDays();
-        $weeklyAvg = $this->getWeeklyAvg($mealRecordDays);
-        return view('mealRecord.sevenListRead')
-            ->with('mealRecordDays', $mealRecordDays)
-            ->with('weeklyAvg', $weeklyAvg);
+        $weeklyAvg = MealRecord::selectRaw('ROUND((SUM(percent)/Count(DISTINCT date)),3) as wpercent ,' 
+                                         . 'ROUND(((SUM(weight)/Count(DISTINCT date))*4),3) as wkcal,' 
+                                         . 'ROUND((SUM(weight)/Count(DISTINCT date)),3) as wsugar')->where('user_id', Auth::user()->id)->groupBy('user_id')->first();
+        $thisweek = Carbon::today();
+        $records = [null, null, null, null, null, null, null];
+        foreach($records as $index => $record)
+        {
+            $tmp = MealRecord::where('user_id', Auth::user()->id)->whereDate('datetime', $thisweek)->get();
+            $sum = MealRecord::selectRaw('SUM(weight) as sweight,' 
+                                       . 'ROUND(SUM(percent),3) as spercent,' 
+                                       . 'SUM(calories) as scalories')->where('user_id', Auth::user()->id)->whereDate('datetime', $thisweek)->first();
+            $records[$index] = [
+                'date' => $thisweek->toDateString() , 
+                'sweight' => $sum->sweight != null ? $sum->sweight : 0, 
+                'spercent' => $sum->spercent != null ? $sum->spercent : 0, 
+                'scalories' => $sum->scalories != null ? $sum->scalories : 0, 
+                'data' => $tmp, 
+            ];
+            
+            $thisweek->subDay(1);
+        }
+        
+        $message = [
+            'weeklyAvg' => $weeklyAvg, 
+            'mealRecordDays' => $records, 
+        ];
+        return View::make('mealRecord.sevenListRead', $message);
     }
+    
+    
 
     public function readChart()
     {

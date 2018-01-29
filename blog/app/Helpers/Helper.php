@@ -7,32 +7,20 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 
 class Helper{
-    public static function test($user_id, $weight) {
-        
-        if ($weight == 0.0) {
-            return 0.0;
-        }
-        
-        $userProfile = UserProfile::where('user_id', $user_id)->first();
-        $pSex = $userProfile->sex;
-        $pWeight = $userProfile->weight;
-        $pHeight = $userProfile->height;
-        $pAge = $userProfile->age;
-        
-        $ACTIVITY_AMOUNT_ARR = Config::get('constants.ACTIVITY_AMOUNT_ARR');
-        $activity_amount = $userProfile->activity_amount;
-        
-        $activity_amount_value = $ACTIVITY_AMOUNT_ARR[$activity_amount]['value'];
-        if ($pSex == 0) {
-            $cal = (66 + (13.7 * $pWeight) + (5 * $pHeight) - (6.8 * $pAge)) * $activity_amount_value;
+   
+    
+    public static function getBSColor($percent)
+    {
+        $pos = $percent / 100;
+        if ($pos == 0) {
+            return "";
+        } elseif ($pos <= 0.05) {
+            return "success";
+        } elseif ($pos <= 0.1) {
+            return "warning";
         } else {
-            $cal = (655 + (9.6 * $pWeight) + (1.7 * $pHeight) - (4.7 * $pAge)) * $activity_amount_value;
+            return "danger";
         }
-        
-        $weight = $weight / $cal * 100;
-        // echo $userProfile->sex;
-        return number_format($weight, 2);
-        
     }
     
     

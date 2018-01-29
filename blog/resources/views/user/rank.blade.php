@@ -8,6 +8,18 @@
 @section('content')
 
 <div class="container-fluid">
+  @if( Auth::user()->isApplying == 1)
+  <div class="row">
+    <div class="col-xs-12">
+    <h3 class="text-center text-warning">你的群組正在申請中，加入後即可觀看。</h3>
+    </div>
+  </div>
+  @else
+  <div class="row">
+    <div class="col-xs-12">
+    <h3 class="text-center text-info">排行時間：{{ $start_date}}~{{ $end_date}}</h3>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-12">
       <ul class="list-group">
@@ -81,6 +93,7 @@
       @endif
   	</div>
   </div>
+  @endif
 </div>
 
 

@@ -88,10 +88,16 @@ class UserController extends Controller
         $user = Auth::user();
         $user->username = $request->username;
         $user->nickname = $request->nickname;
-        if( $user->group != $request->group){
+        if($request->group==1){
+            $user->group = 1;
+            $user->isApplying = 0;
+        }else if($user->group == $request->group){
+            
+        }else{
             $user->group = $request->group;
-            $user->isApplying = $user->group==1?0:1;
+            $user->isApplying = 1;
         }
+
         $user->remarks = $request->remarks;
         $user->save();
         
@@ -134,6 +140,10 @@ class UserController extends Controller
     
     public function rank(){
         //$user = DB::table('meal_records')->selectRaw('count(user_id), user_id')->groupBy('user_id')->orderBy('user_id','DESC');
+        if( Auth::user()->isApplying == 1 ){
+            return View::make('user.rank');
+        }
+        
         
         $now = Carbon::today();
         $lastweek = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek();
@@ -144,9 +154,6 @@ class UserController extends Controller
         ->where([['users.group',Auth::user()->group],['users.isApplying',0]])
         ->whereDate('meal_records.datetime', '>=', $lastweek)->whereDate('meal_records.datetime', '<', $thisweek)
         ->groupBy('meal_records.user_id')->orderBy('score','DESC')->get();
-        
-        
-        
         
         $rank = [null,null,null,null,null,null,null,null,null,null];
         $self = Null;
@@ -162,19 +169,14 @@ class UserController extends Controller
             }
             
         }
-        
-        
-        
-        //$datas2 = MealRecord::selectRaw('SUM(percent) as total')->get();
-        
-        
-        
-        
+
         $message = [
             //'users' => $datas2,
             'rank' => $rank,
             'self' => $self,
             'self_rank' => $self_rank,
+            'start_date' => Carbon::create($now->year,$now->month, $now->day, 0)->subWeek()->subDay(1)->toDateString(),
+            'end_date' => Carbon::create($now->year,$now->month, $now->day, 0)->subWeek()->addDay(6)->toDateString(),
         ];
         
         

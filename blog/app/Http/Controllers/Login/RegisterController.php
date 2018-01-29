@@ -58,8 +58,13 @@ class RegisterController extends Controller
         $user->username = $request->username;
         $user->nickname = $request->nickname;
         $user->password = Hash::make($request->password);
-        $user->group = $request->group;
-        $user->isApplying = $user->group==1?0:1;
+        if($request->group == 1){
+            $user->group = 1;
+            $user->isApplying = 0;
+        }else{
+            $user->group = $request->group;
+            $user->isApplying = 1;
+        }
         $user->remarks = $request->remarks;
         $user->enable_url = hash('sha256', $request->email . $current_time->toDateTimeString());
         $user->expiry_date = $current_time;
