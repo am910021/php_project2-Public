@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Login;
 
+use App\Food;
 use App\HtmlBuilder;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Exception;
@@ -62,10 +64,10 @@ class RegisterController extends Controller
         $user->enable_url = hash('sha256', $request->email . $current_time->toDateTimeString());
         $user->expiry_date = $current_time;
                
-        if(1){
-            $user->save();
-            return Redirect::route('login')->with('message', '帳號申請成功，請您去信箱收信，並點擊啟動帳號。');
-        }
+//         if(1){
+//             $user->save();
+//             return Redirect::route('login')->with('message', '帳號申請成功，請您去信箱收信，並點擊啟動帳號。');
+//         }
         
         
         if($this->sendMail($user->username, $user->email, $user->enable_url)){
@@ -151,5 +153,35 @@ class RegisterController extends Controller
         
         return Redirect::route('login')->with('message', '帳號啟用成功，請您由此登入謝謝。');
     }
+    
+    public function json(){
+        
+        $json = [];
+        $str = '{"name": "%s","weight": %d,"unit": "%s","sugar_gram":%d,"kcal": %d}';
+        //sprintf($str,$user->id, $user->id, $user->username ,$user->nickname, '1');
+        $categorys = Food::select('category', 'category_name')->distinct('category')->get();
+        foreach ($categorys as $category){
+            $tmp = [];
+            $data = [];
+            foreach (Food::where('category',$category->category)->get() as $food){
+                $data[] = [
+                    'name' => $food->name,
+                    'weight' => $food->weight,
+                    'unit' => $food->unit,
+                    'sugar_gram' => $food->sugar_gram,
+                    'kcal' => $food->kcal
+                ];
+            }
+            $tmp['name'] = $category->category_name;
+            $tmp['data'] = $data;
+            $json[] = [sprintf("%d",$category->category)=>$tmp];
+        }
+        
+        //return response()->json( $json, JSON_UNESCAPED_UNICODE);
+        $headers = array('Content-Type' => 'application/json; <a href="http://superlevin.ifengyuan.tw/tag/charset/">charset</a>=utf-8');
+        return Response::json($json, 200, $headers, JSON_UNESCAPED_UNICODE);
+        
+    }
+    
     
 }

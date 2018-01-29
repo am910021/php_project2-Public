@@ -37,12 +37,12 @@ class Helper{
     
     
     public static function  getScore($day, $percent){
-
+        $rep = 100 - $percent;
         
         
         
         
-        return '1';
+        return (100 - $percent)*$day;
     }
     
 }
