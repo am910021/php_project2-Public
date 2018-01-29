@@ -174,11 +174,11 @@ class RegisterController extends Controller
             }
             $tmp['name'] = $category->category_name;
             $tmp['data'] = $data;
-            $json[] = [sprintf("%d",$category->category)=>$tmp];
+            $json[$category->category] = $tmp;
         }
         
         //return response()->json( $json, JSON_UNESCAPED_UNICODE);
-        $headers = array('Content-Type' => 'application/json; <a href="http://superlevin.ifengyuan.tw/tag/charset/">charset</a>=utf-8');
+        $headers = array('Content-Type' => 'application/json; charset=utf-8');
         return Response::json($json, 200, $headers, JSON_UNESCAPED_UNICODE);
         
     }

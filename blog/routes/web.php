@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'post', 'middleware' => 'auth'], function () {
 });
 
-    Route::get('json', 'Login\RegisterController@json')->name('json');
+    //Route::get('json', 'Login\RegisterController@json')->name('json');
 
 
 /** login */
