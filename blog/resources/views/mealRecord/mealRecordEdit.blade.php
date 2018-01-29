@@ -8,6 +8,7 @@
 <br>
 <form class="form-horizontal" action="{{ route('mealRecord.update',['id'=>$record->id]) }}" method="post">
   {{ csrf_field() }}
+  <input type="hidden" id="in_url" name="in_url" value="{{ $url }}">
   <div class="form-group {{ $errors->has('category')?"has-error":"" }}">
     <div class="col-md-offset-2 col-md-6 col-sm-7">
       <div class="input-group">

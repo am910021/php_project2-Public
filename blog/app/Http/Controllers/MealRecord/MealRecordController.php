@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
 
 class MealRecordController extends Controller
 {
@@ -123,7 +124,7 @@ class MealRecordController extends Controller
     }
 
     // 輸入當天
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
         $record = MealRecord::where('id',$id)->first();
         if($record == null){
@@ -134,10 +135,8 @@ class MealRecordController extends Controller
             'record' => $record,
             'categorys' => Food::select('category', 'category_name')->distinct('category')->get(),
             'foods' => Food::select('id','name','category')->where('category', $record->category)->get(),
+            'url' => $request->get('url')!=NULL?$request->get('url'):"mealRecord.read",
         ];
-        
-        
-        
         
         return View::make('mealRecord.mealRecordEdit', $message);
     }
@@ -188,6 +187,11 @@ class MealRecordController extends Controller
         $record->food_id = $food->id;
         $record->setPercent();
         $record->save();
+        
+        if(Route::has($request->get('in_url'))){
+            return Redirect::route($request->get('in_url'))->with('message', '修改成功。');
+        }
+        
         
         return Redirect::route('mealRecord.read')->with('message', '修改成功。');
     }

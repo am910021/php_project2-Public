@@ -68,7 +68,7 @@ background-color: #f2dede;
               <br class="visible-xs">
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6">
-              <a class="btn btn-warning" href="{{ route('mealRecord.edit', ['id'=>$mealRecord->id]) }}">修改</a>
+              <a class="btn btn-warning" href="{{ route('mealRecord.edit', ['id'=>$mealRecord->id]) }}?url={{ 'mealRecord.read' }}">修改</a>
               <br>
             </div>
           </div>

@@ -36,16 +36,16 @@ class DefaultDataSeeder extends Seeder {
     
     public function run()
     {
-//         $group = $this->createGroup();
-//         $user = $this->createUser();
+        $group = $this->createGroup();
+        $user = $this->createUser();
         
-//         $group->manager = $user->id;
-//         $group->save();
-//         $user->group = $group->id;
-//         $user->isApplying = 0;
-//         $user->save();
-         $user = new User;
-         $user->id = 1;
+        $group->manager = $user->id;
+        $group->save();
+        $user->group = $group->id;
+        $user->isApplying = 0;
+        $user->save();
+         //$user = new User;
+         //$user->id = 1;
          $this->createFoodsCategory($user);
     }
     
