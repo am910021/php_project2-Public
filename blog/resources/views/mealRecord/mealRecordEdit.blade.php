@@ -74,8 +74,8 @@
       <div class="input-group">
         <span class="input-group-addon">內容物</span>
           <input type="number" step="0.01" class="form-control" id="weight" name="weight"
-                aria-describedby="numberHelp" value="{{ $record->gram }}">
-          <span class="input-group-addon" id="unit" >{{ $record->unit }}</span>
+                aria-describedby="numberHelp" value="{{ $record->food()->weight }}">
+          <span class="input-group-addon" id="unit" >{{ $record->food()->unit }}</span>
       </div>
       <small id="numberHelp" class="form-text text-muted"></small>
     </div>
