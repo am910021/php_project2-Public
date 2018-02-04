@@ -126,7 +126,7 @@ class MealRecordController extends Controller
     // 輸入當天
     public function edit(Request $request,$id)
     {
-        $record = MealRecord::where('id',$id)->first();
+        $record = MealRecord::where([['id',$id],['user_id',Auth::user()->id]])->first();
         if($record == null){
             return Redirect::route('mealRecord.read')->with('message-fail','錯誤的資料。');
         }
@@ -143,7 +143,7 @@ class MealRecordController extends Controller
     
     public function update(Request $request, $id)
     {
-        $record = MealRecord::where('id',$id)->first();
+        $record = MealRecord::where([['id',$id],['user_id',Auth::user()->id]])->first();
         if($record == null){
             return Redirect::route('mealRecord.read')->with('message-fail','錯誤的資料。');
         }
