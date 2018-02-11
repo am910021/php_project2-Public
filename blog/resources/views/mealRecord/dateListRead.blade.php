@@ -60,10 +60,10 @@
                                                         熱量 {{ $mealRecordDay->calories }} 大卡
                                                     </div>
                                                     <div class="col-sm-3 col-xs-6">
-                                                        糖量比例 {{ $mealRecordDay->gramByPercent() }}
+                                                        游離糖量比例 {{ $mealRecordDay->gramByPercent() }}
                                                     </div>
                                                     <div class="col-sm-3 col-xs-6">
-                                                        糖 {{ $mealRecordDay->weight }} 公克
+                                                        游離糖 {{ $mealRecordDay->weight }} 公克
                                                     </div>
                                                 </div>
                                             </div>
