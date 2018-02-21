@@ -208,7 +208,7 @@ class MealRecordController extends Controller
                 $category
             ]
         ];
-        if ($category == 1) {
+        if ($category == 2) {
             $user = Auth::user();
             $query[] = [
                 'user_id',

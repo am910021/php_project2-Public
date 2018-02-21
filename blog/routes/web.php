@@ -106,9 +106,12 @@ Route::group(['middleware' => ['auth', 'manager']], function () {
     Route::post('admin/category/edit/{id}', 'Admin\FoodManageController@updateCatrgory')->name('admin.updateCatrgory')->where('id', '[0-9]+');
     
     Route::get('admin/category/{id}', 'Admin\FoodManageController@foodShow')->name('admin.foodShow')->where('id', '[0-9]+');
-    Route::get('admin/food/create/{id}', 'Admin\FoodManageController@foodCreate')->name('admin.foodCreate')->where('id', '[0-9]+');
-    Route::get('admin/food/edit/{id}', 'Admin\FoodManageController@foodEdit')->name('admin.foodEdit')->where('id', '[0-9]+');
     
+    Route::get('admin/food/create/{id}', 'Admin\FoodManageController@foodCreate')->name('admin.foodCreate')->where('id', '[0-9]+');
+    Route::post('admin/food/create/{id}', 'Admin\FoodManageController@foodCreateStore')->name('admin.foodCreate')->where('id', '[0-9]+');
+    
+    Route::get('admin/food/edit/{id}', 'Admin\FoodManageController@foodEdit')->name('admin.foodEdit')->where('id', '[0-9]+');
+    Route::post('admin/food/edit/{id}', 'Admin\FoodManageController@foodEditStore')->name('admin.foodEdit')->where('id', '[0-9]+');
 });
 
 Route::group(['middleware' => ['auth', 'groupManage']], function () {

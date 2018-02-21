@@ -107,7 +107,12 @@ function openUrl(i){
         </div>
     </div>
     <div class="row">
-    	<div class="col-md-offset-10 col-md-2 text-right">
+    	<div class="col-md-offset-8 col-md-2 text-right">
+    		<br>
+    		<a class="btn btn-info btn-default btn-block" href="{{ route('admin.foodCreate',['id'=>$category->id]) }}">新增</a>
+    		<br>
+    	</div>
+    	<div class="col-md-2 text-right">
     		<br>
     		<a class="btn btn-info btn-default btn-block" href="{{ route('admin.showCategory') }}">回上一頁</a>
     		<br>
