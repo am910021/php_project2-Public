@@ -21,7 +21,6 @@ class CreateMealRecordTable extends Migration
             ->onDelete('cascade');
             
             $table->datetime('datetime')->useCurrent(); 
-            $table->date('date')->useCurrent();
             $table->integer('category');
             $table->string('name');
             $table->string('unit');
@@ -30,8 +29,17 @@ class CreateMealRecordTable extends Migration
             $table->float('gram');
             $table->float('num');
             $table->float('calories');
-            $table->float('percent')->unsigned();
             $table->integer('food_id')->unsigned();
+            
+            
+            $table->float('percent')->unsigned();
+            
+            $table->integer('age')->unsigned();
+            $table->float('height')->unsigned();
+            $table->float('p_weight')->unsigned();
+            $table->integer('activity_amount')->unsigned();
+            $table->float('rc')->unsigned(); //Recommended calories
+            
             $table->timestamps();
             
         });

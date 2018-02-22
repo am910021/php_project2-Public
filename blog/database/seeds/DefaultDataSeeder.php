@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Group;
+use App\FoodCategory;
 
 class DefaultDataSeeder extends Seeder {
     
@@ -46,30 +47,36 @@ class DefaultDataSeeder extends Seeder {
         $user->save();
          //$user = new User;
          //$user->id = 1;
-         $this->createFoodsCategory($user);
+         $this->createFoodsCategory();
     }
     
     
-    public function createFoodsCategory($user){
+    public function createFoodsCategory(){
+        FoodCategory::truncate();
         Food::truncate();
         $path = storage_path()."/json/category.json";
         $path = file_get_contents($path);
         
         $json = json_decode($path, TRUE);
         foreach ($json as $key => $categorys){
-            $categoryId = $key;
             $categoryName = $categorys['name'];
+            
+            $category = new FoodCategory();
+            $category->name = $categoryName;
+            $category->save();
+            $categoryId = $category->id;
+            
             $foods = $categorys['data'];
             foreach ($foods as $key => $food){
                 Food::create([
-                    'user_id' => $user->id,
+                    'user_id' => 0,
                     'category' => $categoryId,
                     'category_name' => $categoryName,
                     'name' => $food['name'],
                     'weight' => $food['weight'],
                     'unit' => $food['unit'],
                     'sugar_gram' => $food['sugar_gram'],
-                    'kcal' =>  $food['kcal']
+                    'kcal' =>  $food['kcal'],
                 ]);
                 
             }

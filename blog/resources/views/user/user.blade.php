@@ -12,8 +12,8 @@
               <p >年齡: {{ $userProfile->age }} 歲</p>
               <p >身高: {{ $userProfile->height }} 公分</p>
               <p >體重: {{ $userProfile->weight }} 公斤</p>
-              <p >性別: {{ $userProfile->sexValue }}</p>
-              <p>活動量: {{ $userProfile->activityAmountValue }}</p>
+              <p >性別: {{ $userProfile->sexValue }}&nbsp;|&nbsp;活動量: {{ $userProfile->activityAmountValue }}</p>
+              <p>建意熱量: {{ $userProfile->RecommendedCalories }} 以內</p>
               <br>
             </div>
           </div>

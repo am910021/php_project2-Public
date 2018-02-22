@@ -29,13 +29,12 @@ class MealRecord extends Model
 
     public function gramByPercent()
     {
-        $user_id = $this->user_id;
-        $weight = $this->weight;
-        if ($weight == 0.0) {
+        $calories = $this->calories;
+        if ($calories == 0.0) {
             return 0.0;
         }
 
-        $userProfile = UserProfile::where('user_id', $user_id)->first();
+        $userProfile = UserProfile::where('user_id', $this->user_id)->first();
         $pSex = $userProfile->sex;
         $pWeight = $userProfile->weight;
         $pHeight = $userProfile->height;
@@ -46,14 +45,14 @@ class MealRecord extends Model
 
         $activity_amount_value = $ACTIVITY_AMOUNT_ARR[$activity_amount]['value'];
         if ($pSex == 0) {
-            $cal = (66 + (13.7 * $pWeight) + (5 * $pHeight) - (6.8 * $pAge)) * $activity_amount_value;
+            $needCalories = (66 + (13.7 * $pWeight) + (5 * $pHeight) - (6.8 * $pAge)) * $activity_amount_value;
         } else {
-            $cal = (655 + (9.6 * $pWeight) + (1.7 * $pHeight) - (4.7 * $pAge)) * $activity_amount_value;
+            $needCalories = (655 + (9.6 * $pWeight) + (1.7 * $pHeight) - (4.7 * $pAge)) * $activity_amount_value;
         }
 
-        $weight = $weight / $cal * 100;
+        $percent = $calories / $needCalories * 100;
         // echo $userProfile->sex;
-        return number_format($weight, 2);
+        return number_format($percent, 2);
         // return $query->where('votes', '>', 100);
     }
     
@@ -65,7 +64,15 @@ class MealRecord extends Model
         return Food::where('id',$this->food_id)->first();
     }
     
-    
+    public function setProfile(){
+        $userProfile = UserProfile::where('user_id', $this->user_id)->first();
+        
+        $this->age = $userProfile->age;
+        $this->height = $userProfile->height;
+        $this->p_weight = $userProfile->weight;
+        $this->activity_amount = $userProfile->activity_amount;
+        $this->rc = $userProfile->rc;
+    }
     
 
 //    public function getBSColorTagAttribute()

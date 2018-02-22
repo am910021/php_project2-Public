@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 
 
 class UserProfileController extends Controller
@@ -60,6 +62,11 @@ class UserProfileController extends Controller
                 ->withInput();
         }
 
+        
+        
+        
+        
+        
         $user = Auth::user();
         
         $userProfile = new UserProfile;
@@ -69,7 +76,10 @@ class UserProfileController extends Controller
         $userProfile->sex = $request->sex;
         $userProfile->activity_amount = $request->activity_amount;
         $userProfile->user_id = $user->id;  
+        $userProfile->setRecommendedCalories();
         $userProfile->save();
+        
+        
         
         $user->isUser = TRUE;
         $user->save();
@@ -130,4 +140,13 @@ class UserProfileController extends Controller
             ->with('message', '個人設定修改成功。');
     }
 
+    public function keep(){
+        $profile = Auth::user()->profile();
+        $profile->updated_at = Carbon::now();
+        $profile->save();
+        
+        
+        return response()->json(['status'=>'success']);
+    }
+    
 }

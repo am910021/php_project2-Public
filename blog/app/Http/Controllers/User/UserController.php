@@ -150,10 +150,12 @@ class UserController extends Controller
         $thisweek = Carbon::create($now->year,$now->month, $now->day, 0)->subWeek()->addDay(7);
         
         $datas2 = User::join('meal_records', 'meal_records.user_id', '=', 'users.id')
-        ->selectRaw('(100-(SUM(meal_records.percent) / Count(DISTINCT meal_records.date)))*Count(DISTINCT meal_records.date) as score, users.*')
+        ->selectRaw('(100-(SUM(meal_records.percent) / Count(DISTINCT DATE(meal_records.datetime))))*Count(DISTINCT DATE(meal_records.datetime)) as score, users.*')
         ->where([['users.group',Auth::user()->group],['users.isApplying',0]])
         ->whereDate('meal_records.datetime', '>=', $lastweek)->whereDate('meal_records.datetime', '<', $thisweek)
         ->groupBy('meal_records.user_id')->orderBy('score','DESC')->get();
+        
+        //return response()->json( $datas2);
         
         $rank = [null,null,null,null,null,null,null,null,null,null];
         $self = Null;
@@ -180,7 +182,7 @@ class UserController extends Controller
         ];
         
         
-        //return response()->json( $message);
+        
        return View::make('user.rank',$message);
     }
 }

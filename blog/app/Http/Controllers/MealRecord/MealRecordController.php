@@ -24,7 +24,7 @@ class MealRecordController extends Controller
         $percent = MealRecord::selectRaw('SUM(percent) as percent')->where('user_id', $user->id)->whereDate('datetime', $today)->first()->percent;
         $message =[
             'mealRecords' => MealRecord::where('user_id', $user->id)->whereDate('datetime', $today)->get(),
-            'percent' => $percent,
+            //'percent' => $percent,
             'status' =>  ($percent >=10) ? ["danger", "超標:10%↑"] : (($percent <10 && $percent>=5) ? ["warning", "過多：5%↑"] : ["success","適中"]),
         ];
         return View::make('mealRecord.mealRecordRead',$message);
@@ -106,13 +106,13 @@ class MealRecordController extends Controller
         $mealRecord->num = $request->num;
         
         $mealRecord->datetime = $datetime;
-        $mealRecord->date = $mealRecord->datetime;
         // $mealRecord->sugar_gram = $gram*$m_suger;
         $mealRecord->category = $food->category;
         $mealRecord->name = $food->name;
         $mealRecord->unit = $food->unit;
         $mealRecord->food_id = $food->id;
         $mealRecord->setPercent();
+        $mealRecord->setProfile();
         $mealRecord->save();
         
         if ($dateExist) {
@@ -208,7 +208,7 @@ class MealRecordController extends Controller
                 $category
             ]
         ];
-        if ($category == 1) {
+        if ($category == 2) {
             $user = Auth::user();
             $query[] = [
                 'user_id',
