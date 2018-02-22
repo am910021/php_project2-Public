@@ -16,7 +16,7 @@
                       <option value=""></option>
                       @if(isset($categorys))
                         @foreach ($categorys as $category)
-                            @if( $category->id==$food->category_id )
+                            @if( $category->id==$food->category )
                             <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
                             @else
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -145,7 +145,7 @@
         		</div>
         		<div class="col-sm-1 visible-xs" ><br></div>
         		<div class="col-sm-2">
-        			<a class="btn btn-default btn-xs-block" href="{{ route('admin.foodShow',['id'=>$food->category_id]) }} ">取消</a>
+        			<a class="btn btn-default btn-xs-block" href="{{ route('admin.foodShow',['id'=>$food->category]) }} ">取消</a>
         		</div>
         </div>
     </form>

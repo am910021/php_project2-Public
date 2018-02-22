@@ -80,7 +80,7 @@ class FoodManageController extends Controller{
         
         $message = [
             'category' => $category,
-            'foods'=> Food::where('category_id',$id)->get(),
+            'foods'=> Food::where('category',$id)->get(),
         ];
         return View::make('admin.food.showFood',$message);
         
@@ -137,7 +137,6 @@ class FoodManageController extends Controller{
         
         $food = new Food;
         $food->user_id = $user->id;
-        $food->category_id = $category->id;
         $food->category = $category->id;
         $food->category_name = $category->name;
         $food->name = $request->name;
@@ -205,7 +204,6 @@ class FoodManageController extends Controller{
         
         $category = FoodCategory::where('id',$request->category)->first();
         
-        $food->category_id = $category->id;
         $food->category = $category->id;
         $food->category_name = $category->name;
         $food->name = $request->name;

@@ -20,11 +20,11 @@ class CreateUserProfileTable extends Migration
             $table->float('weight');
             $table->integer('sex');
             $table->integer('activity_amount');
-            
+            $table->float('rc')->unsigned(); //Recommended calories
             $table->integer('user_id')->unsigned()->unique();
-            $table->foreign('user_id')
-            ->references('id')->on('users')
-            ->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
+            
             $table->timestamps();
             
         });

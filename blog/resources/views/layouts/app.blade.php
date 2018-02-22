@@ -246,6 +246,13 @@
                     <strong>{{ session()->get('message-fail') }}</strong>
                 </div>
             @endif
+            @if(session()->has('need_to_be_updated'))
+                <div class="alert alert-warning fade in">
+                {{ session()->pull('need_to_be_updated') }}
+ 				是否要更新您的活動量？ <a href="{{ route('userProfile.edit') }}" class="alert-link" data-dismiss="alert">是</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 				<a href="" onclick="keep()" class="alert-link" data-dismiss="alert">否</a>
+                </div>
+            @endif
             {{--<h1>--}}
             {{--Dashboard--}}
             {{--<!-- <small>Control panel</small> -->--}}
@@ -312,6 +319,27 @@
 <!-- <script src="dist/js/pages/dashboard.js"></script> -->
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="js/demo.js"></script> -->
+<script type="text/javascript">
+
+function keep(){
+    $.ajax({
+        url: "{{ route('userProfile.keep') }}",   //存取Json的網址             
+        type: "get",
+        cache:false,
+        dataType: 'json',
+        //contentType: "application/json",
+        success: function (data) {
+        	console.log('pass');
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        }
+    });
+}
+
+</script>
 @yield('javascript')
 
 </body>

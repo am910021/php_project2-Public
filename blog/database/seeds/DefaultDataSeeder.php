@@ -77,7 +77,6 @@ class DefaultDataSeeder extends Seeder {
                     'unit' => $food['unit'],
                     'sugar_gram' => $food['sugar_gram'],
                     'kcal' =>  $food['kcal'],
-                    'category_id' => $categoryId
                 ]);
                 
             }

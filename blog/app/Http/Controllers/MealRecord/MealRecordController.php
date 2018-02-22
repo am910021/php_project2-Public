@@ -106,13 +106,13 @@ class MealRecordController extends Controller
         $mealRecord->num = $request->num;
         
         $mealRecord->datetime = $datetime;
-        $mealRecord->date = $mealRecord->datetime;
         // $mealRecord->sugar_gram = $gram*$m_suger;
         $mealRecord->category = $food->category;
         $mealRecord->name = $food->name;
         $mealRecord->unit = $food->unit;
         $mealRecord->food_id = $food->id;
         $mealRecord->setPercent();
+        $mealRecord->setProfile();
         $mealRecord->save();
         
         if ($dateExist) {

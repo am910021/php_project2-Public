@@ -10,7 +10,7 @@ class FoodCategory extends Model
     
     
     public function gettheAmountOfFoodAttribute(){
-        return Food::where('category_id',$this->id)->count();
+        return Food::where('category',$this->id)->count();
     }
     
     

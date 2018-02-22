@@ -29,19 +29,18 @@ class UserProfile extends Model
         
     }
     
-    
-    public function getRecommendedCaloriesAttribute()
+    public function getRecommendedCalories()
     {
         $user_id = $this->user_id;
         
-        $userProfile = UserProfile::where('user_id', $user_id)->first();
-        $pSex = $userProfile->sex;
-        $pWeight = $userProfile->weight;
-        $pHeight = $userProfile->height;
-        $pAge = $userProfile->age;
+        
+        $pSex = $this->sex;
+        $pWeight = $this->weight;
+        $pHeight = $this->height;
+        $pAge = $this->age;
         
         $ACTIVITY_AMOUNT_ARR = Config::get('constants.ACTIVITY_AMOUNT_ARR');
-        $activity_amount = $userProfile->activity_amount;
+        $activity_amount = $this->activity_amount;
         
         $activity_amount_value = $ACTIVITY_AMOUNT_ARR[$activity_amount]['value'];
         if ($pSex == 0) {
@@ -50,7 +49,18 @@ class UserProfile extends Model
             $cal = (655 + (9.6 * $pWeight) + (1.7 * $pHeight) - (4.7 * $pAge)) * $activity_amount_value;
         }
         
-        return number_format($cal, 2);
+        return $cal;
+        // return $query->where('votes', '>', 100);
+    }
+    
+    public function setRecommendedCalories()
+    {
+        $this->rc = $this->getRecommendedCalories();
+    }
+    
+    public function getRecommendedCaloriesAttribute()
+    {
+        return number_format($this->getRecommendedCalories(), 2);
         // return $query->where('votes', '>', 100);
     }
         

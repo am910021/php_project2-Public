@@ -64,7 +64,15 @@ class MealRecord extends Model
         return Food::where('id',$this->food_id)->first();
     }
     
-    
+    public function setProfile(){
+        $userProfile = UserProfile::where('user_id', $this->user_id)->first();
+        
+        $this->age = $userProfile->age;
+        $this->height = $userProfile->height;
+        $this->p_weight = $userProfile->weight;
+        $this->activity_amount = $userProfile->activity_amount;
+        $this->rc = $userProfile->rc;
+    }
     
 
 //    public function getBSColorTagAttribute()

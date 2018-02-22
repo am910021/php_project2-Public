@@ -56,7 +56,6 @@ class FoodController extends Controller
         $food = new Food;
         $food->user_id = $user->id;
         $food->category = 2;
-        $food->category_id = 2;
         $food->category_name = '自行輸入';
         $food->name = $request->name;
         $food->weight = $request->weight;

@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('userProfile', 'User\UserProfileController@read')->name('userProfile.read');
     Route::post('userProfile/store', 'User\UserProfileController@store')->name('userProfile.store');
     Route::get('userProfile/edit', 'User\UserProfileController@edit')->name('userProfile.edit');
+    Route::get('userProfile/keep', 'User\UserProfileController@keep')->name('userProfile.keep');
+    
 // Route::get('userProfile/create', 'User\UserProfileController@create')->name('userProfile.create');
 // Route::post('userProfile/update', 'User\UserProfileController@update')->name('userProfile.update');
 });
