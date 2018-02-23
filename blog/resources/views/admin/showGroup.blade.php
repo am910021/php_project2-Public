@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    群組管理
+@endsection
+
 @section('style')
 <link rel="stylesheet" href="{{ asset('static/bootstrap-table/bootstrap-table.css') }}">
 @endsection

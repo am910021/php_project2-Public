@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use App\Group;
+use App\FoodCategory;
+use App\Food;
 
 class AdminController extends Controller
 {
@@ -25,6 +27,9 @@ class AdminController extends Controller
             'groups' => Group::all()->count(),
             'inGroupMember' => User::where('group','>',1)->count(),
             'noGroupMember' => User::where('group',1)->orWhereNull('group')->count(),
+            
+            'category' => FoodCategory::where('id','>',2)->count(),
+            'customFood' => Food::where('user_id','>',0)->count(),
             
         ];
         return View::make('admin.admin', $message);

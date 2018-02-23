@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('userProfile', 'User\UserProfileController@read')->name('userProfile.read');
     Route::post('userProfile/store', 'User\UserProfileController@store')->name('userProfile.store');
     Route::get('userProfile/edit', 'User\UserProfileController@edit')->name('userProfile.edit');
+    Route::get('userProfile/keep', 'User\UserProfileController@keep')->name('userProfile.keep');
+    
 // Route::get('userProfile/create', 'User\UserProfileController@create')->name('userProfile.create');
 // Route::post('userProfile/update', 'User\UserProfileController@update')->name('userProfile.update');
 });
@@ -99,6 +101,19 @@ Route::group(['middleware' => ['auth', 'manager']], function () {
     Route::post('admin/group/createUpdate', 'Admin\AdminController@groupUpdate')->name('admin.groupUpdate');
     Route::get('admin/group/edit/{id}', 'Admin\AdminController@groupEdit')->name('admin.groupEdit')->where('id', '[0-9]+');
     Route::post('admin/group/edit/{id}', 'Admin\AdminController@groupUpdateById')->name('admin.groupUpdateById')->where('id', '[0-9]+');
+
+
+    Route::get('admin/category', 'Admin\FoodManageController@showCatrgory')->name('admin.showCategory');
+    Route::get('admin/category/edit/{id}', 'Admin\FoodManageController@editCatrgory')->name('admin.editCatrgory')->where('id', '[0-9]+');
+    Route::post('admin/category/edit/{id}', 'Admin\FoodManageController@updateCatrgory')->name('admin.updateCatrgory')->where('id', '[0-9]+');
+    
+    Route::get('admin/category/{id}', 'Admin\FoodManageController@foodShow')->name('admin.foodShow')->where('id', '[0-9]+');
+    
+    Route::get('admin/food/create/{id}', 'Admin\FoodManageController@foodCreate')->name('admin.foodCreate')->where('id', '[0-9]+');
+    Route::post('admin/food/create/{id}', 'Admin\FoodManageController@foodCreateStore')->name('admin.foodCreate')->where('id', '[0-9]+');
+    
+    Route::get('admin/food/edit/{id}', 'Admin\FoodManageController@foodEdit')->name('admin.foodEdit')->where('id', '[0-9]+');
+    Route::post('admin/food/edit/{id}', 'Admin\FoodManageController@foodEditStore')->name('admin.foodEdit')->where('id', '[0-9]+');
 });
 
 Route::group(['middleware' => ['auth', 'groupManage']], function () {

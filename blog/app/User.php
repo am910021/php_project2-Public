@@ -43,6 +43,12 @@ class User extends Authenticatable
     }
     
     
+    public function profile()
+    {
+        return UserProfile::where('user_id',$this->id)->first();
+    }
+    
+    
     public function getSevenMealRecordAmount()
     {
         $count = 0;

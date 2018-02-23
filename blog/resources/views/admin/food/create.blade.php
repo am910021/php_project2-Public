@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('title')
-    新增食物
+    新增-{{ $category->name }}
 @endsection
 
 @section('content')
 
-    <form class="form-horizontal" action="{{ route('food.createStore') }}?url={{ $url }}" method="post">
+    <form class="form-horizontal" action="{{ route('admin.foodCreate',['id'=>$category->id]) }}" method="post">
         {{ csrf_field() }}
         <div class="form-group {{ $errors->has('name')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
@@ -114,7 +114,7 @@
         		</div>
         		<div class="col-sm-1 visible-xs" ><br></div>
         		<div class="col-sm-2">
-        			<a class="btn btn-default btn-xs-block" href="{{ route('mealRecord.create') }} ">取消</a>
+        			<a class="btn btn-default btn-xs-block" href="{{ route('admin.foodShow',['id'=>$category->id]) }} ">取消</a>
         		</div>
         </div>
     </form>

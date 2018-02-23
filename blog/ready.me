@@ -1,3 +1,6 @@
+//初始化專案
+composer install
+
 //產生資料表
 php artisan migrate
 
@@ -8,3 +11,7 @@ php artisan db:seed --class=DefaultDataSeeder
 
 //產生測試資料
 php artisan db:seed --class=TestUserDeeder
+
+
+// root帳號在（產生基本資料）會新增
+// 帳號//密碼  root@localhost//root

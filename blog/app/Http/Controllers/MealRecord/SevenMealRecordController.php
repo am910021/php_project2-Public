@@ -18,9 +18,9 @@ class SevenMealRecordController extends Controller
 
     public function readList()
     {
-        $weeklyAvg = MealRecord::selectRaw('ROUND((SUM(percent)/Count(DISTINCT date)),3) as wpercent ,' 
-                                         . 'ROUND(((SUM(weight)/Count(DISTINCT date))*4),3) as wkcal,' 
-                                         . 'ROUND((SUM(weight)/Count(DISTINCT date)),3) as wsugar')->where('user_id', Auth::user()->id)->groupBy('user_id')->first();
+        $weeklyAvg = MealRecord::selectRaw('ROUND((SUM(percent)/Count(DISTINCT DATE(datetime))),3) as wpercent ,' 
+                                         . 'ROUND(((SUM(weight)/Count(DISTINCT DATE(datetime)))*4),3) as wkcal,' 
+                                         . 'ROUND((SUM(weight)/Count(DISTINCT DATE(datetime))),3) as wsugar')->where('user_id', Auth::user()->id)->groupBy('user_id')->first();
         $thisweek = Carbon::today();
         $records = [null, null, null, null, null, null, null];
         foreach($records as $index => $record)

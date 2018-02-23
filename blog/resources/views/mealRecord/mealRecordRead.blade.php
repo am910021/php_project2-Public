@@ -32,8 +32,9 @@ background-color: #f2dede;
           <br class="visible-xs">
         </div>
         <div class="col-md-offset-6 col-md-3 col-xs-6 text-{{ $status[0] }}">
-            <p>攝食：{{ $percent }}%</p>
-            <p>{{ $status[1] }}</p>
+            {{-- <p>攝食：{{ $percent }}%</p> --}}
+            {{-- <p>{{ $status[1] }}</p> --}}
+            <p>今日建意熱量：{{ Auth::user()->profile()->RecommendedCalories }} 以內</p>
           <br class="visible-xs">
         </div>
       </div>
@@ -56,7 +57,7 @@ background-color: #f2dede;
               <br class="visible-xs">
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6">
-              糖量比例 {{ $mealRecord->gramByPercent() }}
+              糖量比例 {{ $mealRecord->gramByPercent() }}%
               <br class="visible-xs">
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6">
