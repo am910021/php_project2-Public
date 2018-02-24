@@ -22,10 +22,10 @@
             position: absolute;
             width: 15%;
             top: 6.5%;
-            left: 40%;
-            
+            left: 40%;           
             
         }
+                
         .sun-2 {
             position: absolute;
             width: 19%;
@@ -66,6 +66,55 @@
             width: 34%;
             top: 73%;
             left: 2%;
+        }
+          .word1 {
+            position: absolute;
+            width: 34%;
+            top: 73%;
+            left: 2%;         
+            
+        }
+          .word2 {
+            position: absolute;
+            width: 31%;
+            top: 60%;
+            left: 70%;         
+            
+        }
+          .word3 {
+            position: absolute;
+            width: 28%;
+            top: 54%;
+            left: 40%;         
+            
+        }
+          .word4 {
+            position: absolute;
+            width: 25%;
+            top: 43%;
+            left: 2%;         
+            
+        }
+          .word5 {
+            position: absolute;
+            width: 22%;
+            top: 24%;
+            left: 73%;         
+            
+        }
+          .word6 {
+            position: absolute;
+            width: 19%;
+            top: 8%;
+            left: 5%;         
+            
+        }
+          .word7 {
+            position: absolute;
+            width: 15%;
+            top: 4%;
+            left: 40%;         
+            
         }
 
         /* progress bar */
@@ -111,10 +160,18 @@
             <div class="row">
                 <div id="sunChart" class="col-sm-6 col-xs-12">
                     <img class="line" src="{{ asset('img/line.png') }}">
+                     
 
                     @foreach($mealRecordDays as $index => $mealRecordDay)
                         <img class="sun-{{ $index+1 }}"
                              src="{{ asset('img/sun-'.$mealRecordDay->calcColor.'.png') }}">
+                             <div class="word1">今日</div>
+                             <div class="word2">前1日</div>
+                             <div class="word3">前2日</div>
+                             <div class="word4">前3日</div>
+                             <div class="word5">前4日</div>
+                             <div class="word6">前5日</div>
+                             <div class="word7">前6日</div>
                     @endforeach
                 </div>
             </div>
