@@ -83,17 +83,20 @@
                                             <li class="list-group-item list-group-item-default">
 
                                                 <div class="container-fluid">
-                                                    <div class="col-sm-3 col-xs-6">
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
                                                         {{ $mealRecord->datetimeByTime }}
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
                                                         熱量 {{ $mealRecord->calories }} 大卡
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
                                                         糖量比例 {{ $mealRecord->gramByPercent() }}
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
                                                         糖 {{ $mealRecord->weight }} 公克
+                                                    </div>
+                                                     <div class="col-md-2 col-sm-4 col-xs-6">
+                                                        {{ $mealRecord->name }}
                                                     </div>
                                                 </div>
 

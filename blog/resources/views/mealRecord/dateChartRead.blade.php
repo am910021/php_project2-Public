@@ -133,7 +133,7 @@
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: '含糖量'
+                                labelString: '糖攝食比例'
                             }
 
                         }]
