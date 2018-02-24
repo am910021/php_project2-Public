@@ -3,7 +3,14 @@
 @section('title')
     攝食日期列表
 @endsection
-
+@section('style')
+    <style>
+        #dateDiv{
+            margin-bottom: 25px;
+            border: 1px solid black;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -36,9 +43,39 @@
             </div>
 
         </div>
+        
         <br>
-        <div class="row">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        
+         <div class="row">
+         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+         @if (isset($dateAvg))
+         <div class="panel panel-{{ Helper::getBSColor($dateAvg->dpercent) }}" id="dateDiv" >
+         
+            <div class="panel-heading" role="tab">
+              <h4 class="panel-title">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                      <b>日期平均</b> 
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                      游離糖 {{ $dateAvg->dsugar }} 公克
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                      糖的熱量 {{ $dateAvg->dtcal }} 大卡
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                      游離糖量比例 {{ $dateAvg->dpercent }}
+                    </div>
+                  </div>
+                </div>
+        	 </div>
+              </h4>
+            </div>
+          
+  @endif
+        <br>
+       
 
                 @if (isset($mealRecordDays))
                     @foreach($mealRecordDays as $index=>$mealRecordDay)
@@ -109,7 +146,7 @@
                 @endif
             </div>
         </div>
-
+	  
     </div>
 @endsection
 

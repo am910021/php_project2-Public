@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\MealRecord;
 
+use App\User;
 use App\MealRecord;
 use App\MealRecordDay;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class DateMealRecordController extends Controller
 {
@@ -18,7 +20,10 @@ class DateMealRecordController extends Controller
 
     public function readList(Request $request)
     {
-
+        
+     
+        
+        
         $input = $request->all();
         $startDate = $request->startDate;
         $endDate = $request->endDate;
@@ -34,15 +39,18 @@ class DateMealRecordController extends Controller
                 ->withErrors($validator)
                 ->with('startDate', $startDate)
                 ->with('endDate', $endDate);
+                
+            
         }
 
-
+        $dateAvg =$this->getDate($startDate, $endDate);
         $mealRecordDays = $this->getMealRecordDays($startDate, $endDate);
 
         return view('mealRecord.dateListRead')
             ->with('startDate', $startDate)
             ->with('endDate', $endDate)
-            ->with('mealRecordDays', $mealRecordDays);
+            ->with('mealRecordDays', $mealRecordDays)
+            ->with('dateAvg', $dateAvg);
     }
 
     public function readChart(Request $request)
@@ -96,7 +104,18 @@ class DateMealRecordController extends Controller
 
     }
 
-
+    private function getDate($startDate, $endDate){
+        $user = Auth::user();
+        
+        
+        $dateAvg = MealRecord::selectRaw('ROUND((SUM(percent)/Count(DISTINCT DATE(datetime))),3) as dpercent ,'
+            . 'ROUND(((SUM(weight)/Count(DISTINCT DATE(datetime)))*4),3) as dtcal,'
+            . 'ROUND((SUM(weight)/Count(DISTINCT DATE(datetime))),3) as dsugar')->where('user_id', $user->id)
+                                                        ->whereDate('datetime', '>=', $startDate)
+                                                        ->whereDate('datetime', '<=', $endDate)
+                                                        ->groupBy('user_id')->first();
+        return $dateAvg;
+    }
 
     private function getMealRecordDays($startDate, $endDate)
     {
