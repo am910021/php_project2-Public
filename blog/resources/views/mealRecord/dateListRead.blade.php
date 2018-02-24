@@ -96,7 +96,7 @@
                                                         糖 {{ $mealRecord->weight }} 公克
                                                     </div>
                                                      <div class="col-md-2 col-sm-4 col-xs-6">
-                                                        {{ $mealRecord->name }}
+                                                     {{ $mealRecord->name }}
                                                     </div>
                                                 </div>
 
