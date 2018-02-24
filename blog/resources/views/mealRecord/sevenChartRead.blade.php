@@ -17,13 +17,15 @@
             box-shadow: 5px 5px 5px #888888;
         }
 
+           
         .sun-1 {
             position: absolute;
             width: 15%;
             top: 6.5%;
             left: 40%;
+            
+            
         }
-
         .sun-2 {
             position: absolute;
             width: 19%;
