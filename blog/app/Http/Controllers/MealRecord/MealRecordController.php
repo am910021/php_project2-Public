@@ -116,7 +116,7 @@ class MealRecordController extends Controller
         $mealRecord->save();
         
         if ($dateExist) {
-            $this->createMealRecordDay($user, $datetime, false);
+            $this->createMealRecordDay($user, $datetime);
             return Redirect::route('sevenMealRecord.readList')->with('message', '新增成功');
         } else {
             return Redirect::route('mealRecord.read')->with('message', '新增成功');
@@ -187,7 +187,8 @@ class MealRecordController extends Controller
         $record->food_id = $food->id;
         $record->setPercent();
         $record->save();
-        
+
+        $this->createMealRecordDay(Auth::user(), $record->datetime);
         if(Route::has($request->get('in_url'))){
             return Redirect::route($request->get('in_url'))->with('message', '修改成功。');
         }

@@ -127,7 +127,7 @@
                     <img class="number number5" src="{{ asset('img/p5.png') }}">
                     <img class="number number10" src="{{ asset('img/p10.png') }}">
                     <img class="arrows" src="{{ asset('img/arrows.png') }}"
-                         style="left: {{ $weeklyAvg->gramByPercent() * 6.6 > 95 ? 95 : $weeklyAvg->gramByPercent() * 6.6 }}%;">
+                         style="left: {{ $weeklyAvg->percent * 6.6 > 95 ? 95 : $weeklyAvg->percent * 6.6 }}%;">
                 </div>
             </div>
         </div>

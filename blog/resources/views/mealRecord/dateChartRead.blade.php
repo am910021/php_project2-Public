@@ -62,60 +62,128 @@
                 language: 'zh-hant'
             })
 
-            var labelLists = [
+            var labelList = [
                 @forEach($mealRecordDays as $mealRecordDay)
                     "{{ $mealRecordDay->date }}",
                 @endforeach
             ];
-
-            var data = [
+            var percentList = [
                 @forEach($mealRecordDays as $mealRecordDay)
-                {{ $mealRecordDay->gramByPercent() }},
+                    {{ $mealRecordDay->percent }},
+                @endforeach
+            ];
+
+            var caloriesList = [ // 熱量
+                @forEach($mealRecordDays as $mealRecordDay)
+                    {{ $mealRecordDay->calories }},
+                @endforeach
+            ];
+
+            var weightList = [ // 糖量
+                @forEach($mealRecordDays as $mealRecordDay)
+                    {{ $mealRecordDay->weight }},
+                @endforeach
+            ];
+            var heightList = [
+                @forEach($mealRecordDays as $mealRecordDay)
+                    {{ $mealRecordDay->height }},
+                @endforeach
+            ];
+            var p_weightList = [  // 體重
+                @forEach($mealRecordDays as $mealRecordDay)
+                    {{ $mealRecordDay->p_weight }},
+                @endforeach
+            ];
+            var rcList = [
+                @forEach($mealRecordDays as $mealRecordDay)
+                    {{ $mealRecordDay->rc }},
                 @endforeach
             ];
 
             var ctx = document.getElementById("myChart").getContext('2d');
 
-
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labelLists,
+                    labels: labelList,
                     datasets: [
                         {
-                            'label': '糖量比例',
-                            'backgroundColor': 'black',
-                            'borderColor': 'black',
-                            'data': data,
-                            'fill': 'false'
+                            label: '糖量比例',
+                            backgroundColor: 'black',
+                            borderColor: 'black',
+                            data: percentList,
+                            fill: 'false',
+                            yAxisID: 'percent'
+                        },
+                        {
+                            label: '熱量',
+                            backgroundColor: 'orange',
+                            borderColor: 'orange',
+                            data: caloriesList,
+                            fill: 'false',
+                            yAxisID: 'calories'
+                        },
+                        {
+                            label: '糖量',
+                            backgroundColor: 'blue',
+                            borderColor: 'blue',
+                            data: weightList,
+                            fill: 'false',
+                            yAxisID: 'weight',
+                            hidden: true
+                        },
+                        {
+                            label: '身高',
+                            backgroundColor: 'green',
+                            borderColor: 'green',
+                            data: heightList,
+                            fill: 'false',
+                            yAxisID: 'height',
+                            hidden: true
+                        },
+                        {
+                            label: '體重',
+                            backgroundColor: 'gray',
+                            borderColor: 'gray',
+                            data: p_weightList,
+                            fill: 'false',
+                            yAxisID: 'p_weight',
+                            hidden: true
+                        },
+                        {
+                            label: '建議熱量',
+                            backgroundColor: 'red',
+                            borderColor: 'red',
+                            data: rcList,
+                            fill: 'false',
+                            yAxisID: 'calories'
                         }
                     ],
                     yHighlightRange: [
                         {
-                            begin: 0,
-                            end: 5,
+//                            begin: 0,
+//                            end: 5,
                             color: 'rgb(223,240,216)'
                         }, {
-                            begin: 5,
-                            end: 10,
+//                            begin: 5,
+//                            end: 10,
                             color: 'rgb(252,248,227)'
                         }, {
-                            begin: 10,
-                            end: 30,
+//                            begin: 10,
+//                            end: 30,
                             color: 'rgb(242,200,200)'
                         }
                     ]
                 },
                 options: {
                     responsive: true,
-
                     title: {
                         display: true,
                         text: '圖表'
                     },
                     tooltips: {
                         mode: 'index',
-                        intersect: false,
+                        intersect: false
                     },
                     hover: {
                         mode: 'nearest',
@@ -129,14 +197,94 @@
                                 labelString: '日期'
                             }
                         }],
-                        yAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: '含糖量'
-                            }
+                        yAxes: [
+                            {
+                                id: 'percent',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: '糖量比例(%)'
+                                },
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true
+                                }
 
-                        }]
+                            },
+                            {
+                                id: 'calories',
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: '熱量(克)'
+                                },
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            },
+                            {
+                                id: 'weight',
+                                display: false,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: '糖量(克)'
+                                },
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            },
+                            {
+                                id: 'height',
+                                display: false,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: '身高(公分)'
+                                },
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            },
+                            {
+                                id: 'p_weight',
+                                display: false,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: '體重(公斤)'
+                                },
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+//                            ,{
+//                                id: 'rc',
+//                                display: true,
+//                                scaleLabel: {
+//                                    display: true,
+//                                    labelString: '建議熱量(克)'
+//                                },
+//                                position: 'left',
+//                                ticks: {
+//                                    beginAtZero: true
+//                                }
+//                            }
+
+
+                        ]
+                    },
+                    legend: {
+                        onClick: function(event, legendItem) {
+                            //get the index of the clicked legend
+                            var index = legendItem.datasetIndex;
+                            //toggle chosen dataset's visibility
+                            myChart.data.datasets[index].hidden =
+                                !myChart.data.datasets[index].hidden;
+                            //toggle the related labels' visibility
+                            myChart.options.scales.yAxes[index].display =
+                                !myChart.options.scales.yAxes[index].display;
+                            myChart.update();
+                        }
                     }
 
                 }
