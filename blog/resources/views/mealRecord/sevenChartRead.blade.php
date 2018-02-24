@@ -68,52 +68,59 @@
             left: 2%;
         }
           .word1 {
+            font-size:2vw;
             position: absolute;
             width: 34%;
-            top: 73%;
-            left: 2%;         
+            top:70%;
+            left: 14%;         
             
         }
           .word2 {
+            font-size:2vw;
             position: absolute;
             width: 31%;
-            top: 60%;
-            left: 70%;         
+            top: 57%;
+            left: 78.5%;         
             
         }
           .word3 {
+            font-size:2vw;
             position: absolute;
             width: 28%;
-            top: 54%;
-            left: 40%;         
+            top: 50.5%;
+            left:47.5%;         
             
         }
           .word4 {
+            font-size:2vw;
             position: absolute;
             width: 25%;
-            top: 43%;
-            left: 2%;         
+            top: 39.5%;
+            left: 8%;         
             
         }
           .word5 {
+            font-size:2vw;
             position: absolute;
             width: 22%;
-            top: 24%;
-            left: 73%;         
+            top: 20.5%;
+            left: 77%;         
             
         }
           .word6 {
+            font-size:2vw;
             position: absolute;
             width: 19%;
-            top: 8%;
-            left: 5%;         
+            top: 5.5%;
+            left: 7.8%;         
             
         }
           .word7 {
+            font-size:2vw;
             position: absolute;
             width: 15%;
-            top: 4%;
-            left: 40%;         
+            top: 2%;
+            left: 41%;         
             
         }
 
