@@ -23,7 +23,7 @@ class CheckUserMiddleware
     {
         $isUser = Auth::User()->isUser;
         if ($isUser){
-            $data = UserProfile::where('id',Auth::user()->id)->whereDate('updated_at', Carbon::today())->first();
+            $data = UserProfile::where('user_id',Auth::user()->id)->whereDate('updated_at', Carbon::today())->first();
             if($data == NULL){
                 Session::put('need_to_be_updated', '');
             }
