@@ -25,13 +25,13 @@
               <b>當週平均</b>
             </div>
             <div class="col-sm-3 col-xs-6">
-              熱量 {{ $weeklyAvg->wkcal }} 大卡
+              游離糖 {{ $weeklyAvg->wsugar }} 公克
             </div>
             <div class="col-sm-3 col-xs-6">
-              糖量比例 {{ $weeklyAvg->wpercent }}
+              糖的熱量 {{ $weeklyAvg->wkcal }} 大卡
             </div>
             <div class="col-sm-3 col-xs-6">
-              糖 {{ $weeklyAvg->wsugar }} 公克
+              游離糖量比例 {{ $weeklyAvg->wpercent }}
             </div>
           </div>
         </div>
@@ -54,13 +54,13 @@
                 {{ $mealRecordDay['date'] }}
               </div>
               <div class="col-sm-3 col-xs-6">
-                熱量 {{ $mealRecordDay['scalories'] }} 大卡
+                游離糖 {{ $mealRecordDay['sweight'] }} 公克
               </div>
               <div class="col-sm-3 col-xs-6">
-                糖量比例 {{ $mealRecordDay['spercent'] }}
+                糖的熱量 {{ $mealRecordDay['scalories'] }} 大卡
               </div>
               <div class="col-sm-3 col-xs-6">
-                糖 {{ $mealRecordDay['sweight'] }} 公克
+                游離糖量比例 {{ $mealRecordDay['spercent'] }}
               </div>
             </div>
           </div>
@@ -80,16 +80,16 @@
 				{{ $mealRecord->datetimeByTime }}
                 <br class="visible-xs">
               </div>
-              <div class="col-md-2 col-sm-4 col-xs-6">
-                熱量 {{ $mealRecord->calories }} 大卡
+               <div class="col-md-2 col-sm-4 col-xs-6">
+                游離糖量 {{ $mealRecord->weight }}
                 <br class="visible-xs">
               </div>
               <div class="col-md-2 col-sm-4 col-xs-6">
-                糖量比例 {{ $mealRecord->percent }}
+                糖的熱量 {{ $mealRecord->calories }} 大卡
                 <br class="visible-xs">
               </div>
               <div class="col-md-2 col-sm-4 col-xs-6">
-                糖量 {{ $mealRecord->weight }}
+                游離糖量比例 {{ $mealRecord->percent }}
                 <br class="visible-xs">
               </div>
               <div class="col-md-2 col-sm-4 col-xs-6">

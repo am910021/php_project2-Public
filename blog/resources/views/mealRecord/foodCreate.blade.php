@@ -71,7 +71,7 @@
         <div class="form-group {{ $errors->has('sugar_gram')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
-                    <span class="input-group-addon">糖量</span>
+                    <span class="input-group-addon">游離糖量</span>
                     <input type="number" step="0.01" class="form-control" id="sugar_gram" name="sugar_gram" aria-describedby="sugar_gramHelp" min="0"
                            value="{{ old('sugar_gram', '') }}">
                     <span class="input-group-addon">公克</span>
@@ -91,7 +91,7 @@
         <div class="form-group {{ $errors->has('kcal')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
-                    <span class="input-group-addon">熱量</span>
+                    <span class="input-group-addon">糖的熱量</span>
                     <input type="number" step="0.01" class="form-control" id="kcal" name="kcal" aria-describedby="kcalHelp" min="0"
                            value="{{ old('kcal', '') }}">
                     <span class="input-group-addon">&nbsp;&nbsp;卡&nbsp;&nbsp;</span>

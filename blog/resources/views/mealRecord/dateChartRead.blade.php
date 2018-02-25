@@ -83,7 +83,7 @@
                     labels: labelLists,
                     datasets: [
                         {
-                            'label': '糖量比例',
+                            'label': '游離糖量比例',
                             'backgroundColor': 'black',
                             'borderColor': 'black',
                             'data': data,
@@ -133,7 +133,7 @@
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: '含糖量'
+                                labelString: '游離糖含量'
                             }
 
                         }]
