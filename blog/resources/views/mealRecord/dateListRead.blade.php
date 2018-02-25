@@ -79,7 +79,7 @@
 
                 @if (isset($mealRecordDays))
                     @foreach($mealRecordDays as $index=>$mealRecordDay)
-                        <div class="panel panel-{{ $mealRecordDay->BSColorTag }}">
+                        <div class="panel panel-{{ Helper::getBSColor($mealRecordDay->percent) }}">
                             <div class="panel-heading" role="tab" id="heading-{{ $index }}">
                                 <h4 class="panel-title">
                                     @if ($mealRecordDay->calories!=0)
@@ -100,7 +100,7 @@
                                                         糖的熱量 {{ $mealRecordDay->calories }} 大卡
                                                     </div>
                                                      <div class="col-sm-3 col-xs-6">
-                                                        游離糖量比例 {{ $mealRecordDay->gramByPercent() }}
+                                                        游離糖量比例 {{ $mealRecordDay->percent }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,10 +118,10 @@
                                         @foreach($mealRecordDay->mealRecords() as $mealRecord)
 
                                             <li class="list-group-item list-group-item-default">
-
                                                 <div class="container-fluid">
                                                     <div class="col-md-2 col-sm-4 col-xs-6">
                                                         {{ $mealRecord->datetimeByTime }}
+                                                        <br class="visible-xs">
                                                     </div>
                                                      <div class="col-sm-2 col-xs-4">
                                                         游離糖 {{ $mealRecord->weight }} 公克
@@ -130,13 +130,18 @@
                                                         糖的熱量 {{ $mealRecord->calories }} 大卡
                                                     </div>
                                                     <div class="col-sm-2 col-xs-4">
-                                                        游離糖量比例 {{ $mealRecord->gramByPercent() }}
+                                                        游離糖量比例 {{ $mealRecord->percent }}
                                                     </div>
-                                                     <div class="col-sm-2 col-xs-4">
-                                                     {{ $mealRecord->name }}
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
+                                                        {{ $mealRecord->name }}
+                                                        <br class="visible-xs">
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
+                                                        <a class="btn btn-warning"
+                                                           href="{{ route('mealRecord.edit', ['id'=>$mealRecord->id]) }}?url={{ 'dateMealRecord.readList' }}">修改</a>
+                                                        <br>
                                                     </div>
                                                 </div>
-
                                             </li>
 
                                         @endforeach

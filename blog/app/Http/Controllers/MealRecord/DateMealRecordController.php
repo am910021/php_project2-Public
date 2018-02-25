@@ -6,6 +6,7 @@ use App\User;
 use App\MealRecord;
 use App\MealRecordDay;
 use App\Http\Controllers\Controller;
+use App\UserProfile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,7 +80,6 @@ class DateMealRecordController extends Controller
         foreach ($mealRecordDays as $mealRecordDay) {
             $labelLists[] = $mealRecordDay->date;
         }
-//        $labelLists = json_encode($labelLists);
 
         return view('mealRecord.dateChartRead')
             ->with('mealRecordDays', $mealRecordDays)
@@ -136,16 +136,29 @@ class DateMealRecordController extends Controller
         $today = Carbon::today()->format("Y-m-d");
         if ($today == $endDate) {
             $mealRecord = MealRecord::
-            select(DB::raw('SUM(calories) calories, SUM(weight) weight'))
+            select(DB::raw('SUM(calories) calories, 
+                            SUM(weight) weight, 
+                            ROUND(SUM(percent),3) percent '))
                 ->where('user_id', $user->id)
                 ->whereDate('datetime', $today)->first();
             $calories = $mealRecord['calories'] ?? 0;
             $weight = $mealRecord['weight'] ?? 0;
+            $percent = $mealRecord['percent'] ?? 0;
+
             $mealRecordDay = new MealRecordDay;
             $mealRecordDay->user_id = $user->id;
             $mealRecordDay->calories = $calories;
             $mealRecordDay->weight = $weight;
             $mealRecordDay->date = $today;
+
+            $mealRecordDay->percent = $percent;
+            $userProfile = UserProfile::where('user_id', $user->id)->first();
+
+            $mealRecordDay->age = $userProfile->age;
+            $mealRecordDay->height = $userProfile->height;
+            $mealRecordDay->p_weight = $userProfile->weight;
+            $mealRecordDay->activity_amount = $userProfile->activity_amount;
+            $mealRecordDay->rc = $userProfile->rc;
 
             $temp[] = $mealRecordDay;
         }
