@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use App\MealRecord;
 use Carbon\Carbon;
+use App\Food;
 
 class UserController extends Controller
 {
@@ -41,7 +42,7 @@ class UserController extends Controller
             'user' => Auth::user(),
             'status' => ['已加入','申請中','被拒絕'],
             'userProfile' => UserProfile::where('user_id',$user->id)->first(),
-            
+            'custom' => Food::where([['user_id',$user->id],['category',2]])->count(),
         ];
         
         return View::make('user.user',$message);
@@ -185,4 +186,14 @@ class UserController extends Controller
         
        return View::make('user.rank',$message);
     }
+    
+    public function foodList(){
+        $message = [
+            'list' => Food::where([['category',2],['user_id',Auth::user()->id]])->get(),
+            
+        ];
+        
+        return View::make('user.foodList',$message);
+    }
+    
 }

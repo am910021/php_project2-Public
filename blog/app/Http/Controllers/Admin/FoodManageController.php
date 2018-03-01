@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Food;
+use App\MealRecord;
 
 
 class FoodManageController extends Controller{
@@ -104,27 +105,7 @@ class FoodManageController extends Controller{
         if($id <= 2 || $category == NULL){
             return Redirect::route('admin.showCategory')->with('message-fail','錯誤的類別選擇。');
         }
-        
-        $rules = [
-            'name' => 'required|string',
-            'weight' => 'required|numeric',
-            'unit' => 'required|string',
-            'sugar_gram' => 'required|numeric',
-            'kcal' => 'required|numeric',
-        ];
-        $messages = [
-            'name.required'=> '名稱 不能留空。',
-            'weight.required'=> '份量 不能留空。',
-            'unit.required'=> '單位 不能留空。',
-            'sugar_gram.required'=> '糖量 不能留空。',
-            'kcal.required'=> '熱量 不能留空。',
-            
-            'weight.numeric'=> '份量 欄位請隃入數字。',
-            'sugar_gram.numeric'=> '糖量 欄位請隃入數字。',
-            'kcal.numeric'=> '熱量 欄位請隃入數字。',
-            
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $this->getRules(0), $this->getMessages());
         //fails
         // $validator->passes()
         if ($validator->fails()) {
@@ -170,30 +151,7 @@ class FoodManageController extends Controller{
         if($food == NULL){
             return Redirect::route('admin.showCategory')->with('message-fail','錯誤的食品選擇。');
         }
-        
-        $rules = [
-            'category' => 'required|exists:food_categories,id',
-            'name' => 'required|string',
-            'weight' => 'required|numeric',
-            'unit' => 'required|string',
-            'sugar_gram' => 'required|numeric',
-            'kcal' => 'required|numeric',
-        ];
-        $messages = [
-            'category.required' => '類別 不能留空。',
-            'name.required'=> '名稱 不能留空。',
-            'weight.required'=> '份量 不能留空。',
-            'unit.required'=> '單位 不能留空。',
-            'sugar_gram.required'=> '糖量 不能留空。',
-            'kcal.required'=> '熱量 不能留空。',
-            
-            'category.exists' => '類別 無效。',
-            'weight.numeric'=> '份量 欄位請隃入數字。',
-            'sugar_gram.numeric'=> '糖量 欄位請隃入數字。',
-            'kcal.numeric'=> '熱量 欄位請隃入數字。',
-            
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $this->getRules(), $this->getMessages());
         //fails
         // $validator->passes()
         if ($validator->fails()) {
@@ -224,5 +182,93 @@ class FoodManageController extends Controller{
         
         return View::make('admin.food.customList',$message);
     }
+    
+    public function customAdd($id){
+        $food = Food::where('id',$id)->first();
+        if($food == NULL){
+            return Redirect::route('admin.foodCustom')->with('message-fail','錯誤的食品選擇。');
+        }
+        $message = [
+            'food' => $food,
+            'categorys' =>FoodCategory::where('id','>',2)->get(),
+        ];
+        
+        
+        return View::make('admin.food.customAdd',$message);
+    }
 
+    public function customUpdate(Request $request, $id){
+        $food = Food::where('id',$id)->first();
+        if($food == NULL){
+            return Redirect::route('admin.foodCustom')->with('message-fail','錯誤的食品選擇。');
+        }
+        $validator = Validator::make($request->all(), $this->getRules(), $this->getMessages());
+        //fails
+        // $validator->passes()
+        if ($validator->fails()) {
+            return Redirect::route('admin.foodCustomAdd', ['id'=>$id])
+            ->withErrors($validator)
+            ->withInput();
+        }
+        
+        $category = FoodCategory::where('id',$request->get('category'))->first();
+        
+        $mealRecords = MealRecord::where('food_id', $food->id)->get();
+        foreach($mealRecords as $mealRecord){
+            $mealRecord->category = $category->id;
+            $mealRecord->timestamps = false;
+            $mealRecord->save();
+        }
+        
+        
+        $food->user_id = 1;
+        $food->category = $category->id;
+        $food->category_name = $category->name;
+        $food->name = $request->name;
+        $food->weight = $request->weight;
+        $food->unit = $request->unit;
+        $food->sugar_gram = $request->sugar_gram;
+        $food->kcal = $request->kcal;
+        $food->save();
+        
+        return Redirect::route('admin.foodShow', ['id'=>$category->id])->with('message', $food->name.'修改成功。');
+    }
+    
+    
+    
+    
+    private function getRules($mode=1){
+        $rules = [
+            'name' => 'required|string',
+            'weight' => 'required|numeric',
+            'unit' => 'required|string',
+            'sugar_gram' => 'required|numeric',
+            'kcal' => 'required|numeric',
+        ];
+        
+        if($mode==1){
+            $rules['category'] = 'required|exists:food_categories,id';
+        }
+        
+        return $rules;
+    }
+    
+    private function getMessages(){
+        $messages = [
+            'category.exists'=> '所選擇的 類別 選項無效。',
+            'category.required'=> '類別 不能留空。',
+            'name.required'=> '名稱 不能留空。',
+            'weight.required'=> '份量 不能留空。',
+            'unit.required'=> '單位 不能留空。',
+            'sugar_gram.required'=> '糖量 不能留空。',
+            'kcal.required'=> '熱量 不能留空。',
+            
+            'weight.numeric'=> '份量 欄位請隃入數字。',
+            'sugar_gram.numeric'=> '糖量 欄位請隃入數字。',
+            'kcal.numeric'=> '熱量 欄位請隃入數字。',
+            
+        ];
+        return $messages;
+    }
+    
 }

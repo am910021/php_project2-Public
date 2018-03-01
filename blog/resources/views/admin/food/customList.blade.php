@@ -43,10 +43,10 @@ $('#table').bootstrapTable({
 });
 
 function openUrl(i){
-	location.href = "{{ route('admin.editCatrgory',['id'=>'']) }}/"+i;
+	//location.href = "{{ route('admin.editCatrgory',['id'=>'']) }}/"+i;
 }
 function openUrl2(i){
-	location.href = "{{ route('admin.foodShow',['id'=>'']) }}/"+i;
+	location.href = "{{ route('admin.foodCustomAdd',['id'=>'']) }}/"+i;
 }
 </script>
 @endsection

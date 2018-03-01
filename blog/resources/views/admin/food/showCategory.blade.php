@@ -105,7 +105,6 @@ function openUrl2(i){
     </div>
     <div class="row">
     	<div class="col-md-offset-10 col-md-2 text-right">
-    		<br>
     		<a class="btn btn-info btn-default btn-block" href="{{ route('admin') }}">回上一頁</a>
     		<br>
     	</div>

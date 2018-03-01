@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('user/update', 'User\UserController@update')->name('user.update');
     Route::get('user/password', 'User\UserController@pwdEdit')->name('user.password');
     Route::post('user/password', 'User\UserController@pwdUpdate')->name('user.password');
+    
+    Route::get('user/food/', 'User\UserController@foodList')->name('user.foodList');
    
     /** userProfile */
     Route::get('userProfile', 'User\UserProfileController@read')->name('userProfile.read');
@@ -116,6 +118,8 @@ Route::group(['middleware' => ['auth', 'manager']], function () {
     Route::post('admin/food/edit/{id}', 'Admin\FoodManageController@foodEditStore')->name('admin.foodEdit')->where('id', '[0-9]+');
     
     Route::get('admin/custom', 'Admin\FoodManageController@customList')->name('admin.foodCustom');
+    Route::get('admin/custom/{id}', 'Admin\FoodManageController@customAdd')->name('admin.foodCustomAdd')->where('id', '[0-9]+');
+    Route::post('admin/custom/{id}', 'Admin\FoodManageController@customUpdate')->name('admin.foodCustomUpdate')->where('id', '[0-9]+');
 });
 
 Route::group(['middleware' => ['auth', 'groupManage']], function () {

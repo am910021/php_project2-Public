@@ -91,7 +91,7 @@
         <div class="form-group {{ $errors->has('kcal')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
-                    <span class="input-group-addon">糖熱量</span>
+                    <span class="input-group-addon">總熱量</span>
                     <input type="number" step="0.01" class="form-control" id="kcal" name="kcal" aria-describedby="kcalHelp" min="0"
                            value="{{ old('kcal', '') }}">
                     <span class="input-group-addon">&nbsp;&nbsp;卡&nbsp;&nbsp;</span>

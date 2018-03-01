@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('title')
-   修改-{{ $food->name }}
+   新增 "{{ $food->name }}" 到共用食品
 @endsection
 
 @section('content')
 
-    <form class="form-horizontal" action="{{ route('admin.foodEdit',['id'=>$food->id]) }}" method="post">
+    <form class="form-horizontal" action="{{ route('admin.foodCustomUpdate',['id'=>$food->id]) }}" method="post">
         {{ csrf_field() }}
         <div class="form-group {{ $errors->has('category')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
@@ -145,7 +145,7 @@
         		</div>
         		<div class="col-sm-1 visible-xs" ><br></div>
         		<div class="col-sm-2">
-        			<a class="btn btn-default btn-xs-block" href="{{ route('admin.foodShow',['id'=>$food->category]) }} ">取消</a>
+        			<a class="btn btn-default btn-xs-block" href="{{ route('admin.foodCustom') }} ">取消</a>
         		</div>
         </div>
     </form>

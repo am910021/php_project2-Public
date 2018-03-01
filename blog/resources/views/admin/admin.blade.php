@@ -58,6 +58,7 @@
           <div class="row">
             <div class="col-md-6">
               <a class="btn btn-info btn-block" href="{{ route('admin.showCategory') }}">食品種類管理</a>
+              <br>
             </div>
             <div class="col-md-6">
               <a class="btn btn-info btn-block" href="{{ route('admin.foodCustom') }}">自訂義例表</a>
