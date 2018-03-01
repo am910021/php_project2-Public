@@ -146,7 +146,7 @@
         $food.append('<option></option>')
         for (var i = 0; i < data.length; i++) {
           const food = data[i];
-          var option = `<option value=\"${food.id}\">${food.name}</option>`;
+          var option = '<option value="'+food.id+'">'+food.name+'</option>';
           $food.append(option);
         }
       });

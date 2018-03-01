@@ -123,7 +123,6 @@ class MealRecordController extends Controller
         }
     }
 
-    // 輸入當天
     public function edit(Request $request,$id)
     {
         $record = MealRecord::where([['id',$id],['user_id',Auth::user()->id]])->first();

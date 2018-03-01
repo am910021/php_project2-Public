@@ -152,7 +152,7 @@
                     $food.append('<option></option>')
                     for (var i = 0; i < data.length; i++) {
                         const food = data[i];
-                        var option = `<option value=\"${food.id}\">${food.name}</option>`;
+                        var option = '<option value="'+food.id+'">'+food.name+'</option>';
                         $food.append(option);
                     }
                 });
@@ -193,7 +193,7 @@
             yesterday.setDate(yesterday.getDate() - 1);
             $('.datepicker').datepicker({
                 'autoclose': true,
-                //'startDate': yesterday,
+                'startDate': yesterday,
                 'endDate': yesterday,
                 'format': 'yyyy-mm-dd',
                 language: 'zh-hant'

@@ -216,8 +216,13 @@ class FoodManageController extends Controller{
         return Redirect::route('admin.foodShow', ['id'=>$category->id])->with('message', $food->name.'修改成功。');
     }
     
-    
-    
-    
-    
+    public function customList(){
+        $message = [
+            'list' => Food::where('category',2)->get(),
+            
+        ];
+        
+        return View::make('admin.food.customList',$message);
+    }
+
 }

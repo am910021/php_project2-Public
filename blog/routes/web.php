@@ -114,6 +114,8 @@ Route::group(['middleware' => ['auth', 'manager']], function () {
     
     Route::get('admin/food/edit/{id}', 'Admin\FoodManageController@foodEdit')->name('admin.foodEdit')->where('id', '[0-9]+');
     Route::post('admin/food/edit/{id}', 'Admin\FoodManageController@foodEditStore')->name('admin.foodEdit')->where('id', '[0-9]+');
+    
+    Route::get('admin/custom', 'Admin\FoodManageController@customList')->name('admin.foodCustom');
 });
 
 Route::group(['middleware' => ['auth', 'groupManage']], function () {
