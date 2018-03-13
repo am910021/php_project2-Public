@@ -42,6 +42,22 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-6 well">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>自訂義食品</h3>
+              <p >自訂義食品數量: {{ $custom }} </p>
+              <br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <a class="btn btn-block btn-primary" href="{{ route('user.foodList') }}">管理自訂義食品</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
 

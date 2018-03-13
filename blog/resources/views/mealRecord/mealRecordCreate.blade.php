@@ -48,7 +48,7 @@
       <small id="categoryHelp" class="form-text text-muted">如果找不到你想要的類別，可以按旁邊的"新增食物"。</small>
     </div>
     <div class="col-md-2 col-sm-2">
-      <a class="btn btn-primary btn-xs-block" href="{{ route('food.create') }}">新增食物</a>
+      <a class="btn btn-primary btn-xs-block" href="{{ route('food.create') }}?url={{ request()->path() }}">新增食物</a>
     </div>
     @if($errors->has('category'))
     <div class="col-md-3 col-sm-3">
@@ -152,7 +152,7 @@
                     $food.append('<option></option>')
                     for (var i = 0; i < data.length; i++) {
                         const food = data[i];
-                        var option = `<option value=\"${food.id}\">${food.name}</option>`;
+                        var option = '<option value="'+food.id+'">'+food.name+'</option>';
                         $food.append(option);
                     }
                 });
@@ -193,7 +193,7 @@
             yesterday.setDate(yesterday.getDate() - 1);
             $('.datepicker').datepicker({
                 'autoclose': true,
-                //'startDate': yesterday,
+                'startDate': yesterday,
                 'endDate': yesterday,
                 'format': 'yyyy-mm-dd',
                 language: 'zh-hant'
