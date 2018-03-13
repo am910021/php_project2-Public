@@ -78,7 +78,7 @@ class SevenMealRecordController extends Controller
                 $date = $date->addDay(1);
 
                 $mealRecordDay = MealRecordDay::
-                where('user_id', $user->id)
+                    where('user_id', $user->id)
                     ->whereDate('date', $date)->get();
                 // 如果有資料 就下一個
                 if ($mealRecordDay->count() == 1) {
@@ -102,15 +102,20 @@ class SevenMealRecordController extends Controller
         // calc today
         $today = Carbon::today();
         $mealRecord = MealRecord::
-        select(DB::raw('SUM(calories) calories, SUM(weight) weight'))
+        select(DB::raw('SUM(calories) calories, 
+                        SUM(weight) weight, 
+                        ROUND(SUM(percent),3) percent '))
             ->where('user_id', $user->id)
             ->whereDate('datetime', $today)->first();
         $calories = $mealRecord['calories'] ?? 0;
         $weight = $mealRecord['weight'] ?? 0;
+        $percent = $mealRecord['percent'] ?? 0;
+
         $mealRecordDay = new MealRecordDay;
         $mealRecordDay->user_id = $user->id;
         $mealRecordDay->calories = $calories;
         $mealRecordDay->weight = $weight;
+        $mealRecordDay->percent = $percent;
         $mealRecordDay->date = $today->toDateString();
         // 放第一個
         if ($order_by == 'DESC') {
@@ -128,6 +133,7 @@ class SevenMealRecordController extends Controller
         $user = Auth::user();
         $weekCalories = 0;
         $weekWeight = 0;
+        $weekPercent = 0;
         $count = 0;
         foreach ($mealRecordDays as $mealRecordDay) {
             $temp[] = $mealRecordDay;
@@ -136,18 +142,19 @@ class SevenMealRecordController extends Controller
             }
             $weekCalories += $mealRecordDay->calories;
             $weekWeight += $mealRecordDay->weight;
+            $weekPercent += $mealRecordDay->percent;
         }
 
         if ($count != 0) {
             $weekCalories = $weekCalories / $count;
             $weekWeight = $weekWeight / $count;
-        } else {
-            $weekCalories = 0;
-            $weekWeight = 0;
+            $weekPercent = $weekPercent / $count;
         }
+
         $mealRecordDay = new MealRecordDay;
         $mealRecordDay->calories = $weekCalories;
         $mealRecordDay->weight = $weekWeight;
+        $mealRecordDay->percent = $weekPercent;
 
         $mealRecordDay->date = "當週平均";
         $mealRecordDay->user_id = $user->id;

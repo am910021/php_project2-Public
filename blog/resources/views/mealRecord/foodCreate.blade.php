@@ -15,7 +15,7 @@
                     <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{ old('name', '') }}">
                     <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question">&nbsp;&nbsp;&nbsp;</span></span>
                   </div>
-                  <small id="nameHelp" class="form-text text-muted">改名稱是既往不究的，除非使用者也修改了記錄。</small>
+                  <small id="nameHelp" class="form-text text-muted"></small>
               </div>
 
 
@@ -36,7 +36,7 @@
                     value="{{ old('weight', '') }}">
                     <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question">&nbsp;&nbsp;&nbsp;</span></span>
                   </div>
-                  <small id="weightHelp" class="form-text text-muted">改份量是既往不究的，除非使用者也修改了記錄。</small>
+                  <small id="weightHelp" class="form-text text-muted"></small>
               </div>
 
             @if($errors->has('weight'))
@@ -56,7 +56,7 @@
                            value="{{ old('unit', '') }}">
                     <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question">&nbsp;&nbsp;&nbsp;</span></span>
                   </div>
-                  <small id="unitHelp" class="form-text text-muted">改單位是既往不究的，除非使用者也修改了記錄。</small>
+                  <small id="unitHelp" class="form-text text-muted"></small>
               </div>
 
             @if($errors->has('unit'))
@@ -71,12 +71,12 @@
         <div class="form-group {{ $errors->has('sugar_gram')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
-                    <span class="input-group-addon">糖量</span>
+                    <span class="input-group-addon">糖</span>
                     <input type="number" step="0.01" class="form-control" id="sugar_gram" name="sugar_gram" aria-describedby="sugar_gramHelp" min="0"
                            value="{{ old('sugar_gram', '') }}">
                     <span class="input-group-addon">公克</span>
                   </div>
-                  <small id="sugar_gramHelp" class="form-text text-muted">改糖量是既往不究的，除非使用者也修改了記錄。</small>
+                  <small id="sugar_gramHelp" class="form-text text-muted"></small>
               </div>
 
             @if($errors->has('sugar_gram'))
@@ -91,12 +91,12 @@
         <div class="form-group {{ $errors->has('kcal')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
-                    <span class="input-group-addon">熱量</span>
+                    <span class="input-group-addon">糖熱量</span>
                     <input type="number" step="0.01" class="form-control" id="kcal" name="kcal" aria-describedby="kcalHelp" min="0"
                            value="{{ old('kcal', '') }}">
                     <span class="input-group-addon">&nbsp;&nbsp;卡&nbsp;&nbsp;</span>
                   </div>
-                  <small id="kcalHelp" class="form-text text-muted">改熱量是既往不究的，除非使用者也修改了記錄。</small>
+                  <small id="kcalHelp" class="form-text text-muted"></small>
               </div>
 
             @if($errors->has('kcal'))

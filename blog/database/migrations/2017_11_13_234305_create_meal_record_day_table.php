@@ -21,8 +21,16 @@ class CreateMealRecordDayTable extends Migration
             ->onDelete('cascade');
             
             $table->date('date');
-            $table->float('calories');
-            $table->float('weight');
+            $table->float('calories'); // 熱量 /大卡
+            $table->float('weight');   // 糖 / 公克
+
+            $table->float('percent')->unsigned();
+
+            $table->integer('age')->unsigned();
+            $table->float('height')->unsigned();           // 身高
+            $table->float('p_weight')->unsigned();         // 體重
+            $table->integer('activity_amount')->unsigned();
+            $table->float('rc')->unsigned(); //Recommended calories
 
             $table->timestamps();
         });

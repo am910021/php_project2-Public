@@ -3,7 +3,14 @@
 @section('title')
     攝食日期列表
 @endsection
-
+@section('style')
+    <style>
+        #dateDiv{
+            margin-bottom: 25px;
+            border: 1px solid black;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -36,13 +43,43 @@
             </div>
 
         </div>
+        
         <br>
-        <div class="row">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        
+         <div class="row">
+         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+         @if (isset($dateAvg))
+         <div class="panel panel-{{ Helper::getBSColor($dateAvg->dpercent) }}" id="dateDiv" >
+         
+            <div class="panel-heading" role="tab">
+              <h4 class="panel-title">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                      <b>日期平均</b> 
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                      游離糖 {{ $dateAvg->dsugar }} 公克
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                      糖的熱量 {{ $dateAvg->dtcal }} 大卡
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                      游離糖量比例 {{ $dateAvg->dpercent }}
+                    </div>
+                  </div>
+                </div>
+        	 </div>
+              </h4>
+            </div>
+          
+  @endif
+        <br>
+       
 
                 @if (isset($mealRecordDays))
                     @foreach($mealRecordDays as $index=>$mealRecordDay)
-                        <div class="panel panel-{{ $mealRecordDay->BSColorTag }}">
+                        <div class="panel panel-{{ Helper::getBSColor($mealRecordDay->percent) }}">
                             <div class="panel-heading" role="tab" id="heading-{{ $index }}">
                                 <h4 class="panel-title">
                                     @if ($mealRecordDay->calories!=0)
@@ -56,14 +93,14 @@
                                                     <div class="col-sm-3 col-xs-6">
                                                         {{ $mealRecordDay->date }}
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
-                                                        熱量 {{ $mealRecordDay->calories }} 大卡
+                                                     <div class="col-sm-3 col-xs-6">
+                                                        游離糖 {{ $mealRecordDay->weight }} 公克
                                                     </div>
                                                     <div class="col-sm-3 col-xs-6">
-                                                        糖量比例 {{ $mealRecordDay->gramByPercent() }}
+                                                        糖的熱量 {{ $mealRecordDay->calories }} 大卡
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
-                                                        糖 {{ $mealRecordDay->weight }} 公克
+                                                     <div class="col-sm-3 col-xs-6">
+                                                        游離糖量比例 {{ $mealRecordDay->percent }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,22 +118,30 @@
                                         @foreach($mealRecordDay->mealRecords() as $mealRecord)
 
                                             <li class="list-group-item list-group-item-default">
-
                                                 <div class="container-fluid">
-                                                    <div class="col-sm-3 col-xs-6">
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
                                                         {{ $mealRecord->datetimeByTime }}
+                                                        <br class="visible-xs">
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
-                                                        熱量 {{ $mealRecord->calories }} 大卡
+                                                     <div class="col-sm-2 col-xs-4">
+                                                        游離糖 {{ $mealRecord->weight }} 公克
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
-                                                        糖量比例 {{ $mealRecord->gramByPercent() }}
+                                                    <div class="col-sm-2 col-xs-4">
+                                                        糖的熱量 {{ $mealRecord->calories }} 大卡
                                                     </div>
-                                                    <div class="col-sm-3 col-xs-6">
-                                                        糖 {{ $mealRecord->weight }} 公克
+                                                    <div class="col-sm-2 col-xs-4">
+                                                        游離糖量比例 {{ $mealRecord->percent }}
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
+                                                        {{ $mealRecord->name }}
+                                                        <br class="visible-xs">
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-4 col-xs-6">
+                                                        <a class="btn btn-warning"
+                                                           href="{{ route('mealRecord.edit', ['id'=>$mealRecord->id]) }}?url={{ 'dateMealRecord.readList' }}">修改</a>
+                                                        <br>
                                                     </div>
                                                 </div>
-
                                             </li>
 
                                         @endforeach
@@ -109,7 +154,7 @@
                 @endif
             </div>
         </div>
-
+	  
     </div>
 @endsection
 
