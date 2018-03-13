@@ -15,4 +15,9 @@ class Food extends Model
     public function category(){
         return FoodCategory::where('id',$this->category)->first();
     }
+    
+    public function user(){
+        return User::where('id',$this->user_id)->first();
+    }
+    
 }

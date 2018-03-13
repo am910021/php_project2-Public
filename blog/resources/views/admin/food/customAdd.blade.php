@@ -1,21 +1,52 @@
 @extends('layouts.app')
 
 @section('title')
-    新增食物
+   新增 "{{ $food->name }}" 到共用食品
 @endsection
 
 @section('content')
 
-    <form class="form-horizontal" action="{{ route('food.createStore') }}?url={{ $url }}" method="post">
+    <form class="form-horizontal" action="{{ route('admin.foodCustomUpdate',['id'=>$food->id]) }}" method="post">
         {{ csrf_field() }}
+        <div class="form-group {{ $errors->has('category')?"has-error":"" }}">
+              <div class="col-sm-offset-1 col-sm-7">
+                  <div class="input-group">
+                    <span class="input-group-addon">類別</span>
+                    <select name="category" id="category" class="form-control" aria-describedby="categoryHelp">
+                      <option value=""></option>
+                      @if(isset($categorys))
+                        @foreach ($categorys as $category)
+                            @if( $category->id==$food->category )
+                            <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                            @else
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endif
+                        @endforeach
+                      @endif
+                    </select>
+                    <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question">&nbsp;&nbsp;&nbsp;</span></span>
+                  </div>
+                  <small id="categoryHelp" class="form-text text-muted">除非你已經確認好，不然請不要更改類別。</small>
+              </div>
+
+
+            @if($errors->has('category'))
+                <div class="col-sm-3">
+                    <span class="help-block">
+                        <b>{{ $errors->first('category') }}</b>
+                    </span>
+                </div>
+            @endif
+        </div>
+        
         <div class="form-group {{ $errors->has('name')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
                     <span class="input-group-addon">名稱</span>
-                    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{ old('name', '') }}">
+                    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{ $food->name }}">
                     <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question">&nbsp;&nbsp;&nbsp;</span></span>
                   </div>
-                  <small id="nameHelp" class="form-text text-muted"></small>
+                  <small id="nameHelp" class="form-text text-muted">改名稱是既往不究的，除非使用者也修改了記錄。</small>
               </div>
 
 
@@ -33,10 +64,10 @@
                   <div class="input-group">
                     <span class="input-group-addon">份量</span>
                     <input type="number" step="0.01" class="form-control" id="weight" name="weight" aria-describedby="weightHelp" min="0"
-                    value="{{ old('weight', '') }}">
+                    value="{{ $food->weight }}">
                     <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question">&nbsp;&nbsp;&nbsp;</span></span>
                   </div>
-                  <small id="weightHelp" class="form-text text-muted"></small>
+                  <small id="weightHelp" class="form-text text-muted">改份量是既往不究的，除非使用者也修改了記錄。</small>
               </div>
 
             @if($errors->has('weight'))
@@ -53,10 +84,10 @@
                   <div class="input-group">
                     <span class="input-group-addon">單位</span>
                     <input type="text" class="form-control" id="unit" name="unit" aria-describedby="unitHelp"
-                           value="{{ old('unit', '') }}">
+                           value="{{ $food->unit }}">
                     <span class="input-group-addon">&nbsp;&nbsp;&nbsp;<span class="fa fa-question">&nbsp;&nbsp;&nbsp;</span></span>
                   </div>
-                  <small id="unitHelp" class="form-text text-muted"></small>
+                  <small id="unitHelp" class="form-text text-muted">改單位是既往不究的，除非使用者也修改了記錄。</small>
               </div>
 
             @if($errors->has('unit'))
@@ -71,12 +102,12 @@
         <div class="form-group {{ $errors->has('sugar_gram')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
-                    <span class="input-group-addon">糖</span>
+                    <span class="input-group-addon">糖量</span>
                     <input type="number" step="0.01" class="form-control" id="sugar_gram" name="sugar_gram" aria-describedby="sugar_gramHelp" min="0"
-                           value="{{ old('sugar_gram', '') }}">
+                           value="{{ $food->sugar_gram }}">
                     <span class="input-group-addon">公克</span>
                   </div>
-                  <small id="sugar_gramHelp" class="form-text text-muted"></small>
+                  <small id="sugar_gramHelp" class="form-text text-muted">改糖量是既往不究的，除非使用者也修改了記錄。</small>
               </div>
 
             @if($errors->has('sugar_gram'))
@@ -91,12 +122,12 @@
         <div class="form-group {{ $errors->has('kcal')?"has-error":"" }}">
               <div class="col-sm-offset-1 col-sm-7">
                   <div class="input-group">
-                    <span class="input-group-addon">總熱量</span>
+                    <span class="input-group-addon">熱量</span>
                     <input type="number" step="0.01" class="form-control" id="kcal" name="kcal" aria-describedby="kcalHelp" min="0"
-                           value="{{ old('kcal', '') }}">
+                           value="{{ $food->kcal }}">
                     <span class="input-group-addon">&nbsp;&nbsp;卡&nbsp;&nbsp;</span>
                   </div>
-                  <small id="kcalHelp" class="form-text text-muted"></small>
+                  <small id="kcalHelp" class="form-text text-muted">改熱量是既往不究的，除非使用者也修改了記錄。</small>
               </div>
 
             @if($errors->has('kcal'))
@@ -114,7 +145,7 @@
         		</div>
         		<div class="col-sm-1 visible-xs" ><br></div>
         		<div class="col-sm-2">
-        			<a class="btn btn-default btn-xs-block" href="{{ route('mealRecord.create') }} ">取消</a>
+        			<a class="btn btn-default btn-xs-block" href="{{ route('admin.foodCustom') }} ">取消</a>
         		</div>
         </div>
     </form>

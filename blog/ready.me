@@ -23,3 +23,9 @@ php artisan db:seed --class=TestUserDeeder
 
 // root帳號在（產生基本資料）會新增
 // 帳號//密碼  root@localhost//root
+
+
+//設置定時刪除超過24小時未啟用的帳號（不知到的人請查crontab 或 不要作任何事）
+crontab -e
+加入
+* * * * php <專案完整路徑>/artisan schedule:run >> /dev/null 2>&1

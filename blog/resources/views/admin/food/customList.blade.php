@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    食品種類管理-{{ $category->name }}
+    自訂義食品列表
 @endsection
 
 @section('style')
@@ -29,15 +29,13 @@ $('#table').bootstrapTable({
             },{
                 field: 'food_name',
             },{
-                field: 'food_weight',
+                field: 'food_owner',
             },{
-                field: 'food_unit',
+                field: 'food_add',
+                align: 'center',
+                valign: 'middle'
             },{
-                field: 'food_sugar_gram',
-            },{
-                field: 'food_kcal',
-            },{
-                field: 'food_edit',
+                field: 'food_merge',
                 align: 'center',
                 valign: 'middle'
             }
@@ -45,7 +43,10 @@ $('#table').bootstrapTable({
 });
 
 function openUrl(i){
-	location.href = "{{ route('admin.foodEdit',['id'=>'']) }}/"+i;
+	//location.href = "{{ route('admin.editCatrgory',['id'=>'']) }}/"+i;
+}
+function openUrl2(i){
+	location.href = "{{ route('admin.foodCustomAdd',['id'=>'']) }}/"+i;
 }
 </script>
 @endsection
@@ -71,34 +72,30 @@ function openUrl(i){
                   #
                 </th>
                 <th data-field="food_name" data-filter-control="input" data-sortable="true">
-                  名稱
+                  食品名稱
                 </th>
-                <th data-field="food_weight" data-filter-control="input" data-sortable="true">
-                  容量
+                <th data-field="food_owner" data-filter-control="input" data-sortable="true">
+                  擁有者
                 </th>
-                <th data-field="food_unit" data-filter-control="input" data-sortable="true">
-                  單位
-                </th>
-                <th data-field="food_sugar_gram" data-filter-control="input" data-sortable="true">
-                  糖份重量
-                </th>
-                <th data-field="food_kcal" data-filter-control="input" data-sortable="true">
-                  卡路里
-                </th>
-                <th data-field="category_edit">編輯</th>
+				<th data-field="food_add">新增</th>
+                <th data-field="food_merge">合並</th>
               </tr>
             </thead>
             <tbody>
-            @foreach($foods as $food)
+            @foreach($list as $item)
                <tr>
-				<td>{{ $food->id }}</td>
-				<td>{{ $food->name }}</td>
-				<td>{{ $food->weight }}</td>
-				<td>{{ $food->unit }}</td>
-				<td>{{ $food->sugar_gram }}</td>
-				<td>{{ $food->kcal }}</td>
+				<td>{{ $item->id }}</td>
                 <td>
-                   <button type="button" onClick="openUrl('{{ $food->id }}')" class="btn btn-warning btn-xs fa fa-pencil-square-o" ></button>
+                  {{ str_limit($item->name, 32, '...') }}
+                </td>
+                <td>
+                  {{ str_limit($item->user()->username, 32, '...') }}
+                </td>
+                <td>
+                   <button type="button" onClick="openUrl2('{{ $item->id }}')" class="btn btn-warning btn-xs fa fa-plus" ></button>
+                </td>
+                <td>
+                   <button type="button" onClick="openUrl('{{ $item->id }}')" class="btn btn-warning btn-xs fa fa-clone" ></button>
                 </td>
               </tr>
             @endforeach
@@ -107,12 +104,10 @@ function openUrl(i){
         </div>
     </div>
     <div class="row">
-    	<div class="col-md-offset-8 col-md-2 text-right">
-    		<a class="btn btn-info btn-default btn-block" href="{{ route('admin.foodCreate',['id'=>$category->id]) }}">新增</a>
+    	<div class="col-md-offset-10 col-md-2 text-right">
     		<br>
-    	</div>
-    	<div class="col-md-2 text-right">
-    		<a class="btn btn-info btn-default btn-block" href="{{ route('admin.showCategory') }}">回上一頁</a>
+    		<a class="btn btn-info btn-default btn-block" href="{{ route('admin') }}">回上一頁</a>
+    		<br>
     	</div>
     </div>
   </div>
